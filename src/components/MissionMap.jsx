@@ -1,6 +1,6 @@
 import React from 'react';
 import { CASES_DATA } from '../data/casesData';
-import { Lock, Play, CheckCircle2, Star, ShieldAlert, Zap, Compass, ChevronRight } from 'lucide-react';
+import { Lock, Play, CheckCircle2, Star, ShieldAlert, Zap, Compass, ChevronRight, RotateCw } from 'lucide-react';
 import { sound } from '../utils/sound';
 import { getRank, getNextRank } from '../utils/storage';
 
@@ -8,7 +8,8 @@ export default function MissionMap({
   profile,
   onSelectCase,
   onOpenGuide,
-  onOpenCertificate
+  onOpenCertificate,
+  onOpenRodaSifir
 }) {
   const completedCases = profile.completedCases || [];
   const caseScores = profile.caseScores || {};
@@ -66,6 +67,23 @@ export default function MissionMap({
 
           {/* Quick Action Badges Box */}
           <div className="flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0">
+            {/* Roda Sifir Button */}
+            <button
+              onClick={() => {
+                sound.playClick();
+                onOpenRodaSifir();
+              }}
+              className="flex items-center gap-3 p-3.5 rounded-xl bg-cyan-950/60 hover:bg-cyan-900/60 border border-cyan-400/50 hover:border-cyan-300 transition-all text-left group glow-cyan"
+            >
+              <div className="p-2.5 rounded-lg bg-cyan-500 text-slate-950 group-hover:scale-110 transition-transform">
+                <RotateCw className="w-5 h-5 animate-spin" />
+              </div>
+              <div>
+                <p className="text-xs text-cyan-300 font-medium">Latihan Congak Pantas</p>
+                <p className="text-sm font-bold text-white group-hover:text-cyan-200">Arena Roda Sifir</p>
+              </div>
+            </button>
+
             <button
               onClick={() => {
                 sound.playClick();

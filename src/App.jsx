@@ -8,12 +8,13 @@ import VictoryReport from './components/VictoryReport';
 import DossierGuide from './components/DossierGuide';
 import ProfileModal from './components/ProfileModal';
 import CertificateModal from './components/CertificateModal';
+import RodaSifir from './components/RodaSifir';
 import { loadProfile, saveProfile, resetAllProgress, DEFAULT_PROFILE } from './utils/storage';
 import { sound } from './utils/sound';
 
 export default function App() {
   const [profile, setProfile] = useState(() => loadProfile());
-  const [currentView, setCurrentView] = useState('map'); // 'map' | 'briefing' | 'investigation' | 'vault' | 'victory'
+  const [currentView, setCurrentView] = useState('map'); // 'map' | 'briefing' | 'investigation' | 'vault' | 'victory' | 'roda-sifir'
   const [activeCase, setActiveCase] = useState(null);
   const [totalHintsUsedInCase, setTotalHintsUsedInCase] = useState(0);
 
@@ -121,6 +122,7 @@ export default function App() {
         onOpenProfile={() => setShowProfileModal(true)}
         onOpenGuide={() => setShowGuideModal(true)}
         onOpenCertificate={() => setShowCertificateModal(true)}
+        onOpenRodaSifir={() => setCurrentView('roda-sifir')}
         onResetProgress={() => setShowResetConfirm(true)}
         onHomeClick={handleReturnToMap}
       />
@@ -133,6 +135,15 @@ export default function App() {
             onSelectCase={handleSelectCase}
             onOpenGuide={() => setShowGuideModal(true)}
             onOpenCertificate={() => setShowCertificateModal(true)}
+            onOpenRodaSifir={() => setCurrentView('roda-sifir')}
+          />
+        )}
+
+        {currentView === 'roda-sifir' && (
+          <RodaSifir
+            profile={profile}
+            onUpdateProfile={updateProfile}
+            onBack={handleReturnToMap}
           />
         )}
 

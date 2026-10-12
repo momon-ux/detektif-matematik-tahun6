@@ -127,6 +127,25 @@ class SoundEngine {
     this.playTone(987.77, 'sine', 0.1, 0.1);
     setTimeout(() => this.playTone(1318.51, 'sine', 0.18, 0.12), 80);
   }
+
+  playWheelTick(freq = 1400) {
+    if (this.muted) return;
+    this.init();
+    if (!this.ctx) return;
+    this.playTone(freq, 'triangle', 0.02, 0.05);
+  }
+
+  playCombo() {
+    if (this.muted) return;
+    this.init();
+    if (!this.ctx) return;
+    const notes = [659.25, 830.61, 987.77, 1318.51];
+    notes.forEach((freq, idx) => {
+      setTimeout(() => {
+        this.playTone(freq, 'sine', 0.12, 0.15);
+      }, idx * 50);
+    });
+  }
 }
 
 export const sound = new SoundEngine();

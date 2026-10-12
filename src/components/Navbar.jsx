@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, Star, Zap, Volume2, VolumeX, BookOpen, Award, User, RotateCcw } from 'lucide-react';
+import { Shield, Star, Zap, Volume2, VolumeX, BookOpen, Award, User, RotateCcw, RotateCw } from 'lucide-react';
 import { getRank } from '../utils/storage';
 import { sound } from '../utils/sound';
 
@@ -8,6 +8,7 @@ export default function Navbar({
   onOpenProfile,
   onOpenGuide,
   onOpenCertificate,
+  onOpenRodaSifir,
   onResetProgress,
   onHomeClick
 }) {
@@ -80,7 +81,20 @@ export default function Navbar({
           </button>
 
           {/* Quick Buttons */}
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1.5">
+            {/* Roda Sifir Button */}
+            <button
+              onClick={() => {
+                sound.playClick();
+                onOpenRodaSifir();
+              }}
+              className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-gradient-to-r from-cyan-600/90 to-blue-600/90 hover:from-cyan-500 hover:to-blue-500 text-white border border-cyan-400/50 text-xs font-cyber font-bold shadow-md shadow-cyan-950 transition-all hover:scale-105"
+              title="Permainan Roda Sifir"
+            >
+              <RotateCw className="w-3.5 h-3.5 animate-spin" />
+              <span className="hidden sm:inline">RODA SIFIR</span>
+            </button>
+
             {/* Guide Book */}
             <button
               onClick={() => {
