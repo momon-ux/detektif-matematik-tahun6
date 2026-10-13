@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { 
   ArrowLeft, RotateCcw, Volume2, VolumeX, Trophy, 
   Star, Zap, Award, Target, Flame, Sparkles, CheckCircle2, 
-  HelpCircle, Play, Pause, ChevronRight, Crosshair, Home
+  HelpCircle, Play, Pause, ChevronRight, Crosshair, Home, Hammer, Compass
 } from 'lucide-react';
 import { sound } from '../utils/sound';
 import { recordScoreEntry, DEVELOPER_NAME } from '../utils/storage';
@@ -128,7 +128,13 @@ const BALLOON_COLORS = [
   { bg: 'from-amber-500 to-yellow-600', border: 'border-amber-800', textColor: 'text-white', shadow: 'shadow-amber-950/60' },
 ];
 
-export default function MathShooter({ profile, onUpdateProfile, onBack }) {
+export default function MathShooter({ 
+  profile, 
+  onUpdateProfile, 
+  onBack,
+  onNavigateWorld,
+  onNavigateQuest
+}) {
   // Game Setup
   const [gameMode, setGameMode] = useState('sifir'); // 'sifir' | 'tambah-tolak' | 'bahagi' | 'campuran'
   const [isPlaying, setIsPlaying] = useState(false);
@@ -598,21 +604,36 @@ export default function MathShooter({ profile, onUpdateProfile, onBack }) {
                 </div>
               </div>
 
-              <div className="flex gap-2">
-                <button
-                  onClick={() => startGame(gameMode)}
-                  className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-xs font-cyber font-bold text-white shadow-lg flex items-center justify-center gap-1.5"
-                >
-                  <RotateCcw className="w-3.5 h-3.5" />
-                  <span>Main Lagi</span>
-                </button>
-                <button
-                  onClick={onBack}
-                  className="flex-1 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-cyber font-bold text-slate-200 flex items-center justify-center gap-1.5"
-                >
-                  <Home className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Laman Utama</span>
-                </button>
+              <div className="space-y-2">
+                {onNavigateWorld && (
+                  <button
+                    onClick={() => {
+                      sound.playClick();
+                      onNavigateWorld();
+                    }}
+                    className="w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-xs font-cyber font-bold text-white shadow-lg shadow-emerald-950 flex items-center justify-center gap-1.5"
+                  >
+                    <Hammer className="w-3.5 h-3.5 text-emerald-200" />
+                    <span>Guna XP Beli Blok & Bina Rumah</span>
+                  </button>
+                )}
+
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => startGame(gameMode)}
+                    className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-xs font-cyber font-bold text-white shadow-lg flex items-center justify-center gap-1.5"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" />
+                    <span>Main Lagi</span>
+                  </button>
+                  <button
+                    onClick={onBack}
+                    className="flex-1 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-cyber font-bold text-slate-200 flex items-center justify-center gap-1.5"
+                  >
+                    <Home className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>Laman Utama</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>

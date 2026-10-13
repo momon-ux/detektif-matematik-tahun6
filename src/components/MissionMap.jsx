@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { CASES_DATA } from '../data/casesData';
 import { 
   Lock, Play, CheckCircle2, Star, Zap, ChevronRight, 
-  RotateCw, Trophy, Swords, Smartphone, Award, Shield, Sparkles, Target 
+  RotateCw, Trophy, Swords, Smartphone, Award, Shield, Sparkles, Target,
+  Hammer, Compass, Home
 } from 'lucide-react';
 import { sound } from '../utils/sound';
 import { getRank, DEVELOPER_NAME, DEVELOPER_TITLE } from '../utils/storage';
@@ -12,6 +13,8 @@ export default function MissionMap({
   onSelectCase,
   onOpenGuide,
   onOpenCertificate,
+  onOpenWorld,
+  onOpenQuest,
   onOpenRodaSifir,
   onOpenMathShooter,
   onOpenRecords,
@@ -96,7 +99,88 @@ export default function MissionMap({
       </div>
 
       {/* ======================================================== */}
-      {/* 2. FOUR MAIN BATTLE MODES (Landscape Mobile Legends UI)  */}
+      {/* 2. DUA MOD UTAMA: DUNIA BLOK & KEMBARA QUEST             */}
+      {/* ======================================================== */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        {/* Card A: Dunia Blok Impian (Lapangan Rumput Saya) */}
+        <div
+          onClick={() => {
+            sound.playClick();
+            onOpenWorld();
+          }}
+          className="relative rounded-3xl bg-gradient-to-br from-emerald-950 via-slate-900 to-teal-950/80 border-2 border-emerald-500/70 hover:border-emerald-400 p-5 sm:p-6 cursor-pointer group shadow-2xl hover:scale-[1.01] transition-all overflow-hidden flex flex-col justify-between min-h-[190px]"
+        >
+          <div className="absolute top-0 right-0 w-44 h-44 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none"></div>
+          
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-cyber px-3 py-1 rounded-full bg-emerald-950 border border-emerald-400/60 text-emerald-300 font-extrabold uppercase tracking-wider shadow-sm flex items-center gap-1.5">
+              <span>🏡 MINECRAFT & LEGO SANDBOX</span>
+            </span>
+            <span className="text-3xl animate-bounce">🏰</span>
+          </div>
+
+          <div className="my-3">
+            <h3 className="text-lg sm:text-2xl font-cyber font-extrabold text-white group-hover:text-emerald-300 transition-colors flex items-center gap-2">
+              <span>DUNIA BLOK & LAPANGAN RUMPUT</span>
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-300 font-tech mt-1 leading-relaxed">
+              Bina rumah impian, pasang bumbung genting, kolam ikan, pagar dan letak kereta sport atau roket angkasa menggunakan <strong>XP</strong> yang anda kumpul!
+            </p>
+          </div>
+
+          <div className="flex items-center justify-between pt-1">
+            <div className="text-[11px] font-tech text-emerald-400 font-bold">
+              🌿 12×12 Petak Lapangan Rumput • Beli Blok Menggunakan XP
+            </div>
+            <button className="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-cyber font-extrabold text-xs shadow-lg shadow-emerald-950 flex items-center gap-1.5 shrink-0">
+              <Hammer className="w-3.5 h-3.5" />
+              <span>MASUK LAPANGAN</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Card B: Kembara Quest Matematik (Adventure Quest) */}
+        <div
+          onClick={() => {
+            sound.playClick();
+            onOpenQuest();
+          }}
+          className="relative rounded-3xl bg-gradient-to-br from-cyan-950 via-slate-900 to-blue-950/80 border-2 border-cyan-500/70 hover:border-cyan-400 p-5 sm:p-6 cursor-pointer group shadow-2xl hover:scale-[1.01] transition-all overflow-hidden flex flex-col justify-between min-h-[190px]"
+        >
+          <div className="absolute top-0 right-0 w-44 h-44 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-cyber px-3 py-1 rounded-full bg-cyan-950 border border-cyan-400/60 text-cyan-300 font-extrabold uppercase tracking-wider shadow-sm flex items-center gap-1.5">
+              <span>🧭 ADVENTURE QUEST TAHUN 5 & 6</span>
+            </span>
+            <span className="text-3xl animate-pulse">🏃‍♂️</span>
+          </div>
+
+          <div className="my-3">
+            <h3 className="text-lg sm:text-2xl font-cyber font-extrabold text-white group-hover:text-cyan-300 transition-colors flex items-center gap-2">
+              <span>KEMBARA QUEST MATEMATIK</span>
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-300 font-tech mt-1 leading-relaxed">
+              Jawab soalan matematik, avatar akan melangkah ke destinasi seterusnya di atas peta kembara merentasi 16 stesen & raih ganjaran ratusan <strong>XP</strong>!
+            </p>
+          </div>
+
+          <div className="flex items-center justify-between pt-1">
+            <div className="text-[11px] font-tech text-cyan-400 font-bold">
+              🗺️ 16 Destinasi • Pilih Avatar • Hadiah XP Melimpah Ruah
+            </div>
+            <button className="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-cyber font-extrabold text-xs shadow-lg shadow-cyan-950 flex items-center gap-1.5 shrink-0">
+              <Compass className="w-3.5 h-3.5" />
+              <span>MULAKAN QUEST</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      {/* ======================================================== */}
+      {/* 3. FOUR ARCADE & MINI-GAMES MODES (Kumpul XP Cepat)      */}
       {/* ======================================================== */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
         

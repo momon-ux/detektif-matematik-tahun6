@@ -13,6 +13,8 @@ import ScoreRecordsModal from './components/ScoreRecordsModal';
 import InstallPwaModal from './components/InstallPwaModal';
 import AdminSettingsModal from './components/AdminSettingsModal';
 import MathShooter from './components/MathShooter';
+import BlockWorld from './components/BlockWorld';
+import AdventureQuest from './components/AdventureQuest';
 import { loadProfile, saveProfile, resetAllProgress, recordScoreEntry, DEVELOPER_NAME, DEVELOPER_TITLE, DEFAULT_PROFILE } from './utils/storage';
 import { sound } from './utils/sound';
 
@@ -161,6 +163,8 @@ export default function App() {
         onOpenProfile={() => setShowProfileModal(true)}
         onOpenGuide={() => setShowGuideModal(true)}
         onOpenCertificate={() => setShowCertificateModal(true)}
+        onOpenWorld={() => setCurrentView('block-world')}
+        onOpenQuest={() => setCurrentView('adventure-quest')}
         onOpenRodaSifir={() => setCurrentView('roda-sifir')}
         onOpenMathShooter={() => setCurrentView('math-shooter')}
         onOpenRecords={() => setShowScoreRecordsModal(true)}
@@ -178,10 +182,34 @@ export default function App() {
             onSelectCase={handleSelectCase}
             onOpenGuide={() => setShowGuideModal(true)}
             onOpenCertificate={() => setShowCertificateModal(true)}
+            onOpenWorld={() => setCurrentView('block-world')}
+            onOpenQuest={() => setCurrentView('adventure-quest')}
             onOpenRodaSifir={() => setCurrentView('roda-sifir')}
             onOpenMathShooter={() => setCurrentView('math-shooter')}
             onOpenRecords={() => setShowScoreRecordsModal(true)}
             onOpenInstall={() => setShowInstallModal(true)}
+          />
+        )}
+
+        {currentView === 'block-world' && (
+          <BlockWorld
+            profile={profile}
+            onUpdateProfile={updateProfile}
+            onBack={handleReturnToMap}
+            onNavigateQuest={() => setCurrentView('adventure-quest')}
+            onNavigateShooter={() => setCurrentView('math-shooter')}
+            onNavigateRoda={() => setCurrentView('roda-sifir')}
+          />
+        )}
+
+        {currentView === 'adventure-quest' && (
+          <AdventureQuest
+            profile={profile}
+            onUpdateProfile={updateProfile}
+            onBack={handleReturnToMap}
+            onNavigateWorld={() => setCurrentView('block-world')}
+            onNavigateShooter={() => setCurrentView('math-shooter')}
+            onNavigateRoda={() => setCurrentView('roda-sifir')}
           />
         )}
 
@@ -190,6 +218,8 @@ export default function App() {
             profile={profile}
             onUpdateProfile={updateProfile}
             onBack={handleReturnToMap}
+            onNavigateWorld={() => setCurrentView('block-world')}
+            onNavigateQuest={() => setCurrentView('adventure-quest')}
           />
         )}
 
@@ -198,6 +228,8 @@ export default function App() {
             profile={profile}
             onUpdateProfile={updateProfile}
             onBack={handleReturnToMap}
+            onNavigateWorld={() => setCurrentView('block-world')}
+            onNavigateQuest={() => setCurrentView('adventure-quest')}
           />
         )}
 

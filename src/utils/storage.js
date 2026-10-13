@@ -11,10 +11,16 @@ export const RANKS = [
 ];
 
 export const AVATARS = [
-  { id: 'agent-kilat', name: 'Ejen Kilat', emoji: '⚡', role: 'Pakar Operasi Pantas' },
-  { id: 'agent-zetta', name: 'Ejen Zetta', emoji: '🤖', role: 'Pakar Analisis Algoritma' },
-  { id: 'agent-luna', name: 'Ejen Luna', emoji: '🕵️‍♀️', role: 'Pakar Forensik Kod' },
-  { id: 'agent-orion', name: 'Ejen Orion', emoji: '🚀', role: 'Pakar Navigasi Ruang' },
+  { id: 'steve-builder', name: 'Steve Pembina', emoji: '⛏️🧑‍🌾', role: 'Pakar Arkitek & Pembina Voxel' },
+  { id: 'alex-crafter', name: 'Alex Pereka', emoji: '🛠️👩‍🎨', role: 'Pakar Pertukangan & Halaman' },
+  { id: 'agent-kilat', name: 'Ejen Kilat', emoji: '⚡🏃‍♂️', role: 'Pakar Operasi Pantas' },
+  { id: 'agent-zetta', name: 'Ejen Zetta (Mecha)', emoji: '🤖🚀', role: 'Robot Analisis Masa Depan' },
+  { id: 'agent-luna', name: 'Ejen Luna', emoji: '🕵️‍♀️🔍', role: 'Detektif Forensik Bijak' },
+  { id: 'agent-orion', name: 'Angkasawan Orion', emoji: '👨‍🚀🪐', role: 'Peneroka Galaksi Marikh' },
+  { id: 'wizard-al-khawarizmi', name: 'Penyihir Al-Khawarizmi', emoji: '🧙‍♂️✨', role: 'Sarjana Sihir Aljabar' },
+  { id: 'ninja-bayang', name: 'Ninja Sifir Pantas', emoji: '🥷⚔️', role: 'Pendekar Pengiraan Kilat' },
+  { id: 'dino-crafter', name: 'Dino Rex Builder', emoji: '🦖🏗️', role: 'Raksasa Pembina Megah' },
+  { id: 'kitty-gamer', name: 'Kucing Gamer Meow', emoji: '🐱🎮', role: 'Pakar Strategi Comel' },
 ];
 
 export const DEVELOPER_NAME = 'MOHAMMAD FIKREY BIN ABDUL GAPAR';
@@ -475,13 +481,33 @@ export const DEFAULT_PROFILE = {
   studentClass: '6 Khoir',
   selectedGrade: 'Tahun 6',
   schoolName: 'SK Ranggu',
-  avatarId: 'agent-kilat',
-  xp: 0,
+  avatarId: 'steve-builder',
+  xp: 150, // Starter XP gift
   completedCases: [],
   caseScores: {},
   badges: [],
   scoreRecords: [],
   soundMuted: false,
+  // Sandbox Builder & Quest Data
+  inventory: {
+    'block-wood': 8,
+    'block-brick': 6,
+    'door-wood': 1,
+    'roof-red': 4,
+    'nature-flowers': 2
+  },
+  worldGrid: {
+    '5,5': 'block-brick',
+    '6,5': 'door-wood',
+    '7,5': 'block-brick',
+    '5,4': 'roof-red',
+    '6,4': 'roof-red',
+    '7,4': 'roof-red',
+    '4,6': 'nature-flowers',
+    '8,6': 'nature-flowers'
+  },
+  questStep: 1,
+  questCompletedSteps: []
 };
 
 export function loadProfile() {
@@ -495,11 +521,114 @@ export function loadProfile() {
       studentClass: parsed.studentClass || '6 Khoir',
       selectedGrade: parsed.selectedGrade || 'Tahun 6',
       schoolName: parsed.schoolName || 'SK Ranggu',
+      inventory: parsed.inventory || { ...DEFAULT_PROFILE.inventory },
+      worldGrid: parsed.worldGrid || { ...DEFAULT_PROFILE.worldGrid },
+      questStep: parsed.questStep || 1,
+      questCompletedSteps: Array.isArray(parsed.questCompletedSteps) ? parsed.questCompletedSteps : [],
       scoreRecords: Array.isArray(parsed.scoreRecords) ? parsed.scoreRecords : []
     };
   } catch {
     return { ...DEFAULT_PROFILE };
   }
+}
+
+// Beli Blok Menggunakan XP
+export function buyBlockItem(profile, itemId, cost, qty = 1) {
+  const totalCost = cost * qty;
+  if ((profile.xp || 0) < totalCost) {
+    return { success: false, reason: 'XP tidak mencukupi!', profile };
+  }
+  const currentInv = { ...(profile.inventory || {}) };
+  currentInv[itemId] = (currentInv[itemId] || 0) + qty;
+
+  const updatedProfile = {
+    ...profile,
+    xp: profile.xp - totalCost,
+    inventory: currentInv
+  };
+  saveProfile(updatedProfile);
+  return { success: true, profile: updatedProfile };
+}
+
+// Letak Blok di Petak Lapangan Rumput
+export function placeBlockInWorld(profile, coordKey, itemId) {
+  const currentInv = { ...(profile.inventory || {}) };
+  const currentGrid = { ...(profile.worldGrid || {}) };
+
+  // Semak jika blok sedia ada di petak tersebut (pulangkan ke inventori dulu jika ada)
+  const existingItem = currentGrid[coordKey];
+  if (existingItem) {
+    currentInv[existingItem] = (currentInv[existingItem] || 0) + 1;
+  }
+
+  // Tolak 1 daripada inventori
+  if ((currentInv[itemId] || 0) <= 0) {
+    return { success: false, reason: 'Tiada stok dalam inventori! Sila beli di Kedai Blok.', profile };
+  }
+  currentInv[itemId] = currentInv[itemId] - 1;
+  currentGrid[coordKey] = itemId;
+
+  const updatedProfile = {
+    ...profile,
+    inventory: currentInv,
+    worldGrid: currentGrid
+  };
+  saveProfile(updatedProfile);
+  return { success: true, profile: updatedProfile };
+}
+
+// Buang / Cangkul Blok dari Padang (Pulangkan semula ke inventori)
+export function removeBlockFromWorld(profile, coordKey) {
+  const currentGrid = { ...(profile.worldGrid || {}) };
+  const currentInv = { ...(profile.inventory || {}) };
+  const itemToRemove = currentGrid[coordKey];
+
+  if (!itemToRemove) {
+    return { success: false, profile };
+  }
+
+  delete currentGrid[coordKey];
+  currentInv[itemToRemove] = (currentInv[itemToRemove] || 0) + 1;
+
+  const updatedProfile = {
+    ...profile,
+    inventory: currentInv,
+    worldGrid: currentGrid
+  };
+  saveProfile(updatedProfile);
+  return { success: true, profile: updatedProfile };
+}
+
+// Padam Bersih Semua Blok di Padang (Pulangkan semua ke inventori)
+export function clearWorldGrid(profile) {
+  const currentGrid = { ...(profile.worldGrid || {}) };
+  const currentInv = { ...(profile.inventory || {}) };
+
+  Object.values(currentGrid).forEach(itemId => {
+    currentInv[itemId] = (currentInv[itemId] || 0) + 1;
+  });
+
+  const updatedProfile = {
+    ...profile,
+    inventory: currentInv,
+    worldGrid: {}
+  };
+  saveProfile(updatedProfile);
+  return updatedProfile;
+}
+
+// Ganjaran Quest Mara ke Hadapan
+export function advanceQuestStep(profile, stepId, xpReward) {
+  const completed = Array.from(new Set([...(profile.questCompletedSteps || []), stepId]));
+  const nextStep = Math.max(profile.questStep || 1, stepId + 1);
+  const updatedProfile = {
+    ...profile,
+    xp: (profile.xp || 0) + xpReward,
+    questStep: nextStep,
+    questCompletedSteps: completed
+  };
+  saveProfile(updatedProfile);
+  return updatedProfile;
 }
 
 export function saveProfile(data) {

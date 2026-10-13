@@ -1,7 +1,8 @@
 import React from 'react';
 import { 
   Shield, Star, Zap, Volume2, VolumeX, BookOpen, 
-  Award, User, RotateCcw, RotateCw, Trophy, Smartphone, Settings, Crosshair, Home, ArrowLeft 
+  Award, User, RotateCcw, RotateCw, Trophy, Smartphone, Settings, Crosshair, Home, ArrowLeft,
+  Hammer, Compass
 } from 'lucide-react';
 import { getRank } from '../utils/storage';
 import { sound } from '../utils/sound';
@@ -12,6 +13,8 @@ export default function Navbar({
   onOpenProfile,
   onOpenGuide,
   onOpenCertificate,
+  onOpenWorld,
+  onOpenQuest,
   onOpenRodaSifir,
   onOpenMathShooter,
   onOpenRecords,
@@ -128,17 +131,43 @@ export default function Navbar({
 
           {/* Quick Buttons */}
           <div className="flex items-center gap-1">
+            {/* Dunia Blok Button */}
+            <button
+              onClick={() => {
+                sound.playClick();
+                onOpenWorld();
+              }}
+              className="flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white border border-emerald-400/50 text-xs font-cyber font-extrabold shadow-md shadow-emerald-950 transition-all hover:scale-105"
+              title="Dunia Blok Impian (Lapangan Rumput)"
+            >
+              <Hammer className="w-3.5 h-3.5 text-emerald-200" />
+              <span className="hidden sm:inline">DUNIA BLOK</span>
+            </button>
+
+            {/* Kembara Quest Button */}
+            <button
+              onClick={() => {
+                sound.playClick();
+                onOpenQuest();
+              }}
+              className="flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white border border-cyan-400/50 text-xs font-cyber font-extrabold shadow-md shadow-cyan-950 transition-all hover:scale-105"
+              title="Kembara Quest Matematik"
+            >
+              <Compass className="w-3.5 h-3.5 text-cyan-200" />
+              <span className="hidden sm:inline">QUEST</span>
+            </button>
+
             {/* Roda Sifir Button */}
             <button
               onClick={() => {
                 sound.playClick();
                 onOpenRodaSifir();
               }}
-              className="flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-xl bg-gradient-to-r from-cyan-600/90 to-blue-600/90 hover:from-cyan-500 hover:to-blue-500 text-white border border-cyan-400/50 text-xs font-cyber font-bold shadow-md shadow-cyan-950 transition-all hover:scale-105"
+              className="flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-xl bg-gradient-to-r from-blue-700 to-indigo-700 hover:from-blue-600 hover:to-indigo-600 text-white border border-blue-400/50 text-xs font-cyber font-bold shadow-md shadow-blue-950 transition-all hover:scale-105"
               title="Permainan Roda Sifir"
             >
               <RotateCw className="w-3.5 h-3.5 animate-spin" />
-              <span className="hidden sm:inline">RODA SIFIR</span>
+              <span className="hidden md:inline">RODA SIFIR</span>
             </button>
 
             {/* Math Shooter Button */}

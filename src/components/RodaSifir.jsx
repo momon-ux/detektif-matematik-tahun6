@@ -3,7 +3,7 @@ import confetti from 'canvas-confetti';
 import { 
   ArrowLeft, RotateCw, Zap, Trophy, Flame, CheckCircle2, 
   XCircle, Timer, Volume2, Sparkles, HelpCircle, Eye, EyeOff,
-  Shield, Swords, Skull, Heart, Gift, Play, Award, RefreshCw, Home
+  Shield, Swords, Skull, Heart, Gift, Play, Award, RefreshCw, Home, Hammer, Compass
 } from 'lucide-react';
 import { sound } from '../utils/sound';
 import { recordScoreEntry, DEVELOPER_NAME, DEVELOPER_TITLE } from '../utils/storage';
@@ -54,7 +54,13 @@ const BOSS_LIST = [
   }
 ];
 
-export default function RodaSifir({ profile, onUpdateProfile, onBack }) {
+export default function RodaSifir({ 
+  profile, 
+  onUpdateProfile, 
+  onBack,
+  onNavigateWorld,
+  onNavigateQuest
+}) {
   const [gameMode, setGameMode] = useState('boss'); // 'boss' | 'timed' | 'spin' | 'clock' | 'beat'
   const [selectedTable, setSelectedTable] = useState(6); // 2 to 12, or 'random'
   
@@ -534,6 +540,19 @@ export default function RodaSifir({ profile, onUpdateProfile, onBack }) {
               <Home className="w-3.5 h-3.5" />
               <span>LAMAN UTAMA</span>
             </button>
+            {onNavigateWorld && (
+              <button
+                onClick={() => {
+                  sound.playClick();
+                  onNavigateWorld();
+                }}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-xs font-cyber font-bold text-white border border-amber-400/60 transition-all shadow-md shadow-amber-950"
+                title="Guna XP Beli Blok & Bina Rumah"
+              >
+                <Hammer className="w-3.5 h-3.5 text-amber-200" />
+                <span className="hidden sm:inline">BINA RUMAH</span>
+              </button>
+            )}
           </div>
 
           <span className="text-slate-600 hidden sm:inline">•</span>
