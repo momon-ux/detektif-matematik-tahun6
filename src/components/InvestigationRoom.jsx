@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { 
   ArrowLeft, Lightbulb, CheckCircle2, XCircle, ArrowRight, 
-  HelpCircle, ShieldCheck, Zap, Star 
+  HelpCircle, ShieldCheck, Zap, Star, Home 
 } from 'lucide-react';
 import { sound } from '../utils/sound';
 
 export default function InvestigationRoom({
   caseData,
   onProceedToVault,
-  onBackToBriefing
+  onBackToBriefing,
+  onHome
 }) {
   const [currentStageIndex, setCurrentStageIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -65,17 +66,32 @@ export default function InvestigationRoom({
       {/* ======================================================== */}
       <div className="flex items-center justify-between gap-3 p-3 rounded-2xl bg-slate-900/90 border border-cyan-800/60 shadow-lg">
         
-        {/* Back Button */}
-        <button
-          onClick={() => {
-            sound.playClick();
-            onBackToBriefing();
-          }}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-xs font-cyber font-bold text-slate-300 hover:text-white transition-colors"
-        >
-          <ArrowLeft className="w-3.5 h-3.5" />
-          <span>LOBI</span>
-        </button>
+        {/* Navigation Buttons: Kembali & Laman Utama */}
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          <button
+            onClick={() => {
+              sound.playClick();
+              onBackToBriefing();
+            }}
+            className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-xs font-cyber font-bold text-slate-300 hover:text-white transition-all shadow-sm active:scale-95"
+            title="Kembali ke Taklimat Kes"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>KEMBALI</span>
+          </button>
+          <button
+            onClick={() => {
+              sound.playClick();
+              if (onHome) onHome();
+              else onBackToBriefing();
+            }}
+            className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-xs font-cyber font-bold text-white border border-emerald-400/60 transition-all shadow-md shadow-emerald-950 active:scale-95"
+            title="Ke Laman Utama (Peta Misi)"
+          >
+            <Home className="w-3.5 h-3.5" />
+            <span>LAMAN UTAMA</span>
+          </button>
+        </div>
 
         {/* Stage Nodes Indicator */}
         <div className="flex items-center gap-2">

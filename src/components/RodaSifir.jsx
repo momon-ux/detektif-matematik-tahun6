@@ -3,7 +3,7 @@ import confetti from 'canvas-confetti';
 import { 
   ArrowLeft, RotateCw, Zap, Trophy, Flame, CheckCircle2, 
   XCircle, Timer, Volume2, Sparkles, HelpCircle, Eye, EyeOff,
-  Shield, Swords, Skull, Heart, Gift, Play, Award, RefreshCw
+  Shield, Swords, Skull, Heart, Gift, Play, Award, RefreshCw, Home
 } from 'lucide-react';
 import { sound } from '../utils/sound';
 import { recordScoreEntry, DEVELOPER_NAME, DEVELOPER_TITLE } from '../utils/storage';
@@ -511,16 +511,30 @@ export default function RodaSifir({ profile, onUpdateProfile, onBack }) {
       {/* Top Header & Back Button */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <button
-            onClick={() => {
-              sound.playClick();
-              onBack();
-            }}
-            className="inline-flex items-center gap-2 text-xs font-tech text-slate-400 hover:text-cyan-400 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            KEMBALI KE PETA MISI
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => {
+                sound.playClick();
+                onBack();
+              }}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-xs font-cyber font-bold text-slate-200 hover:text-cyan-400 border border-slate-700 transition-all shadow"
+              title="Kembali ke Peta Misi"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>KEMBALI</span>
+            </button>
+            <button
+              onClick={() => {
+                sound.playClick();
+                onBack();
+              }}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-xs font-cyber font-bold text-white border border-emerald-400/60 transition-all shadow-md shadow-emerald-950"
+              title="Ke Laman Utama (Peta Misi)"
+            >
+              <Home className="w-3.5 h-3.5" />
+              <span>LAMAN UTAMA</span>
+            </button>
+          </div>
 
           <span className="text-slate-600 hidden sm:inline">•</span>
 

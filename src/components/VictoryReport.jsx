@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Award, Star, Zap, CheckCircle2, ArrowRight, RotateCcw, Share2, ShieldCheck, Trophy } from 'lucide-react';
+import { Award, Star, Zap, CheckCircle2, ArrowRight, RotateCcw, Share2, ShieldCheck, Trophy, Home } from 'lucide-react';
 import { sound } from '../utils/sound';
 import { getRank, DEVELOPER_NAME, DEVELOPER_TITLE } from '../utils/storage';
 
@@ -120,7 +120,8 @@ export default function VictoryReport({
             }}
             className="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white font-cyber font-bold text-sm flex items-center justify-center gap-2 shadow-xl shadow-emerald-950 hover:scale-[1.02] transition-transform"
           >
-            <span>KEMBALI KE PETA MISI</span>
+            <Home className="w-4 h-4 text-emerald-200" />
+            <span>KEMBALI KE LAMAN UTAMA (PETA MISI)</span>
             <ArrowRight className="w-4 h-4" />
           </button>
 

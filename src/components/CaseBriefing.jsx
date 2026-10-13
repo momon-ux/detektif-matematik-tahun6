@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, ShieldAlert, MapPin, Target, Award, Play, Terminal } from 'lucide-react';
+import { ArrowLeft, ShieldAlert, MapPin, Target, Award, Play, Terminal, Home } from 'lucide-react';
 import { sound } from '../utils/sound';
 
 export default function CaseBriefing({ caseData, onStartInvestigation, onBack }) {
@@ -10,16 +10,30 @@ export default function CaseBriefing({ caseData, onStartInvestigation, onBack })
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
       {/* Top Navigation */}
-      <button
-        onClick={() => {
-          sound.playClick();
-          onBack();
-        }}
-        className="inline-flex items-center gap-2 text-xs font-tech text-slate-400 hover:text-cyan-400 transition-colors mb-6"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        KEMBALI KE PETA MISI
-      </button>
+      <div className="flex items-center gap-2 mb-6">
+        <button
+          onClick={() => {
+            sound.playClick();
+            onBack();
+          }}
+          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-xs font-cyber font-bold text-slate-200 hover:text-cyan-400 border border-slate-700 transition-all shadow-md active:scale-95"
+          title="Kembali ke Peta Misi"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span>KEMBALI</span>
+        </button>
+        <button
+          onClick={() => {
+            sound.playClick();
+            onBack();
+          }}
+          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-xs font-cyber font-bold text-white border border-emerald-400/60 transition-all shadow-lg shadow-emerald-950 active:scale-95"
+          title="Ke Laman Utama (Peta Misi)"
+        >
+          <Home className="w-4 h-4" />
+          <span>LAMAN UTAMA</span>
+        </button>
+      </div>
 
       {/* Briefing Dossier Card */}
       <div className={`relative overflow-hidden rounded-2xl border bg-slate-900/90 shadow-2xl ${

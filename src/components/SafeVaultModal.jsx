@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import confetti from 'canvas-confetti';
-import { Lock, Unlock, KeyRound, AlertTriangle, Delete, Check } from 'lucide-react';
+import { Lock, Unlock, KeyRound, AlertTriangle, Delete, Check, ArrowLeft, Home } from 'lucide-react';
 import { sound } from '../utils/sound';
 
-export default function SafeVaultModal({ caseData, totalHintsUsed, onVaultUnlocked }) {
+export default function SafeVaultModal({ 
+  caseData, 
+  totalHintsUsed, 
+  onVaultUnlocked,
+  onBack,
+  onHome 
+}) {
   const [inputCode, setInputCode] = useState('');
   const [errorAnim, setErrorAnim] = useState(false);
   const [unlockedAnim, setUnlockedAnim] = useState(false);
@@ -59,6 +65,38 @@ export default function SafeVaultModal({ caseData, totalHintsUsed, onVaultUnlock
   return (
     <div className="max-w-2xl mx-auto px-4 py-8 space-y-6">
       
+      {/* Top Navigation */}
+      {(onBack || onHome) && (
+        <div className="flex items-center gap-2">
+          {onBack && (
+            <button
+              onClick={() => {
+                sound.playClick();
+                onBack();
+              }}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-xs font-cyber font-bold text-slate-200 hover:text-cyan-400 border border-slate-700 transition-all shadow active:scale-95"
+              title="Kembali ke Bilik Siasatan"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>KEMBALI</span>
+            </button>
+          )}
+          {onHome && (
+            <button
+              onClick={() => {
+                sound.playClick();
+                onHome();
+              }}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-xs font-cyber font-bold text-white border border-emerald-400/60 transition-all shadow-md shadow-emerald-950 active:scale-95"
+              title="Ke Laman Utama (Peta Misi)"
+            >
+              <Home className="w-3.5 h-3.5" />
+              <span>LAMAN UTAMA</span>
+            </button>
+          )}
+        </div>
+      )}
+
       {/* Top Header Banner */}
       <div className="text-center space-y-2">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-400 text-xs font-tech">

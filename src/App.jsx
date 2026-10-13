@@ -157,6 +157,7 @@ export default function App() {
       {/* Global Cyber Audio Background Hint / Navbar */}
       <Navbar
         profile={profile}
+        currentView={currentView}
         onOpenProfile={() => setShowProfileModal(true)}
         onOpenGuide={() => setShowGuideModal(true)}
         onOpenCertificate={() => setShowCertificateModal(true)}
@@ -213,6 +214,7 @@ export default function App() {
             caseData={activeCase}
             onProceedToVault={handleProceedToVault}
             onBackToBriefing={() => setCurrentView('briefing')}
+            onHome={handleReturnToMap}
           />
         )}
 
@@ -221,6 +223,8 @@ export default function App() {
             caseData={activeCase}
             totalHintsUsed={totalHintsUsedInCase}
             onVaultUnlocked={handleVaultUnlocked}
+            onBack={() => setCurrentView('investigation')}
+            onHome={handleReturnToMap}
           />
         )}
 

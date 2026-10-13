@@ -1,13 +1,14 @@
 import React from 'react';
 import { 
   Shield, Star, Zap, Volume2, VolumeX, BookOpen, 
-  Award, User, RotateCcw, RotateCw, Trophy, Smartphone, Settings, Crosshair 
+  Award, User, RotateCcw, RotateCw, Trophy, Smartphone, Settings, Crosshair, Home, ArrowLeft 
 } from 'lucide-react';
 import { getRank } from '../utils/storage';
 import { sound } from '../utils/sound';
 
 export default function Navbar({
   profile,
+  currentView = 'map',
   onOpenProfile,
   onOpenGuide,
   onOpenCertificate,
@@ -34,26 +35,62 @@ export default function Navbar({
     <header className="sticky top-0 z-40 bg-slate-950/85 backdrop-blur-md border-b border-cyan-900/40 px-3 sm:px-6 py-1.5 sm:py-2 transition-all">
       <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
         
-        {/* Brand / Logo */}
-        <button 
-          onClick={onHomeClick}
-          className="flex items-center gap-2.5 sm:gap-3 group text-left focus:outline-none"
-        >
-          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-cyan-600 to-blue-500 flex items-center justify-center shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform border border-cyan-300/30 shrink-0">
-            <Shield className="w-5 h-5 text-white animate-pulse" />
-          </div>
-          <div>
-            <div className="flex items-center gap-1.5 sm:gap-2">
-              <span className="font-tech tracking-wider text-[10px] sm:text-xs px-1.5 py-0.2 rounded bg-cyan-950/80 border border-cyan-500/30 text-cyan-400 font-semibold">
-                ARMS CYBER-OPS
-              </span>
-              <span className="text-[10px] sm:text-xs text-slate-400 hidden xs:inline">KSSR SEMAKAN</span>
+        {/* Brand / Logo & Home Navigation */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          <button 
+            onClick={onHomeClick}
+            className="flex items-center gap-2.5 sm:gap-3 group text-left focus:outline-none"
+            title="Klik untuk ke Laman Utama"
+          >
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-cyan-600 to-blue-500 flex items-center justify-center shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform border border-cyan-300/30 shrink-0">
+              <Shield className="w-5 h-5 text-white animate-pulse" />
             </div>
-            <h1 className="text-sm sm:text-lg font-bold font-cyber text-slate-100 tracking-wide group-hover:text-cyan-300 transition-colors">
-              DETEKTIF SIBER <span className="text-cyan-400">MATEMATIK TAHUN 6</span>
-            </h1>
+            <div>
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <span className="font-tech tracking-wider text-[10px] sm:text-xs px-1.5 py-0.2 rounded bg-cyan-950/80 border border-cyan-500/30 text-cyan-400 font-semibold">
+                  ARMS CYBER-OPS
+                </span>
+                <span className="text-[10px] sm:text-xs text-slate-400 hidden xs:inline">KSSR SEMAKAN</span>
+              </div>
+              <h1 className="text-sm sm:text-lg font-bold font-cyber text-slate-100 tracking-wide group-hover:text-cyan-300 transition-colors">
+                DETEKTIF SIBER <span className="text-cyan-400">MATEMATIK TAHUN 6</span>
+              </h1>
+            </div>
+          </button>
+
+          {/* Explicit Home & Back Button */}
+          <div className="flex items-center gap-1.5">
+            {currentView !== 'map' && (
+              <button
+                onClick={() => {
+                  sound.playClick();
+                  onHomeClick();
+                }}
+                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-cyber font-bold transition-all shadow active:scale-95"
+                title="Kembali ke Peta Misi"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>KEMBALI</span>
+              </button>
+            )}
+
+            <button
+              onClick={() => {
+                sound.playClick();
+                onHomeClick();
+              }}
+              className={`flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-xl border text-xs font-cyber font-extrabold shadow-md transition-all active:scale-95 ${
+                currentView !== 'map'
+                  ? 'bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white border-emerald-300 shadow-emerald-950 animate-pulse'
+                  : 'bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-cyan-300 border-slate-800'
+              }`}
+              title="Ke Laman Utama (Peta Misi)"
+            >
+              <Home className="w-3.5 h-3.5 text-emerald-400" />
+              <span>LAMAN UTAMA</span>
+            </button>
           </div>
-        </button>
+        </div>
 
         {/* Stats & Actions */}
         <div className="flex items-center gap-1.5 sm:gap-3 ml-auto">
