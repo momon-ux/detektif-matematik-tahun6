@@ -7,7 +7,7 @@
   "display": "standalone",
   "background_color": "#020617",
   "theme_color": "#06b6d4",
-  "orientation": "landscape",
+  "orientation": "any",
   "lang": "ms",
   "categories": ["education", "games"],
   "icons": [

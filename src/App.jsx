@@ -11,7 +11,6 @@ import CertificateModal from './components/CertificateModal';
 import RodaSifir from './components/RodaSifir';
 import ScoreRecordsModal from './components/ScoreRecordsModal';
 import InstallPwaModal from './components/InstallPwaModal';
-import RotateDeviceOverlay from './components/RotateDeviceOverlay';
 import { loadProfile, saveProfile, resetAllProgress, recordScoreEntry, DEVELOPER_NAME, DEVELOPER_TITLE, DEFAULT_PROFILE } from './utils/storage';
 import { sound } from './utils/sound';
 
@@ -152,9 +151,6 @@ export default function App() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col bg-cyber-grid relative selection:bg-cyan-500 selection:text-slate-950">
       
-      {/* Landscape Orientation Prompt for Mobile Devices */}
-      <RotateDeviceOverlay />
-
       {/* Global Cyber Audio Background Hint / Navbar */}
       <Navbar
         profile={profile}
