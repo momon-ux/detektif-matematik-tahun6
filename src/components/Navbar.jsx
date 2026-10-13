@@ -26,8 +26,8 @@ export default function Navbar({
   const totalStars = Object.values(profile.caseScores || {}).reduce((acc, curr) => acc + (curr.stars || 0), 0);
 
   return (
-    <header className="sticky top-0 z-40 bg-slate-950/85 backdrop-blur-md border-b border-cyan-900/40 px-3 sm:px-4 lg:px-8 py-2.5 sm:py-3 transition-all">
-      <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2.5 sm:gap-3">
+    <header className="sticky top-0 z-40 bg-slate-950/85 backdrop-blur-md border-b border-cyan-900/40 px-3 sm:px-6 py-1.5 sm:py-2 transition-all">
+      <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
         
         {/* Brand / Logo */}
         <button 

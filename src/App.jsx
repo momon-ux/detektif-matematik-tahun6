@@ -11,6 +11,7 @@ import CertificateModal from './components/CertificateModal';
 import RodaSifir from './components/RodaSifir';
 import ScoreRecordsModal from './components/ScoreRecordsModal';
 import InstallPwaModal from './components/InstallPwaModal';
+import RotateDeviceOverlay from './components/RotateDeviceOverlay';
 import { loadProfile, saveProfile, resetAllProgress, recordScoreEntry, DEVELOPER_NAME, DEVELOPER_TITLE, DEFAULT_PROFILE } from './utils/storage';
 import { sound } from './utils/sound';
 
@@ -58,7 +59,7 @@ export default function App() {
   // Case flow handlers
   const handleSelectCase = (caseObj) => {
     setActiveCase(caseObj);
-    setCurrentView('briefing');
+    setCurrentView('investigation');
     setTotalHintsUsedInCase(0);
   };
 
@@ -151,6 +152,9 @@ export default function App() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col bg-cyber-grid relative selection:bg-cyan-500 selection:text-slate-950">
       
+      {/* Landscape Orientation Prompt for Mobile Devices */}
+      <RotateDeviceOverlay />
+
       {/* Global Cyber Audio Background Hint / Navbar */}
       <Navbar
         profile={profile}
@@ -308,23 +312,11 @@ export default function App() {
         </div>
       )}
 
-      {/* Footer With Developer Attribution & Cross-Device Info */}
-      <footer className="no-print border-t border-slate-900 bg-slate-950/90 py-6 px-4 text-center text-xs font-tech text-slate-400 space-y-2">
-        <div className="flex flex-wrap items-center justify-center gap-2 text-cyan-400 font-semibold">
-          <span>AGENSI RISIKAN MATEMATIK SIBER (ARMS) TAHUN 6</span>
-          <span>•</span>
-          <span>KSSR SEMAKAN TERKINI</span>
-        </div>
-        <p className="text-slate-300 text-xs sm:text-sm">
-          Pembangun Sistem: <strong className="text-amber-400 font-cyber font-bold tracking-wide">{DEVELOPER_NAME}</strong>
-        </p>
-        <p className="text-slate-400 text-[11px]">
-          {DEVELOPER_TITLE} • Dihasilkan untuk kegunaan pengajaran, latihan bilik darjah & kendiri
-        </p>
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-[11px] text-emerald-400">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
-          <span>Sokongan Pelbagai Peranti: Telefon Pintar, Tablet, iPad, Komputer & Smartboard</span>
-        </div>
+      {/* Slim Landscape Game Footer */}
+      <footer className="no-print border-t border-slate-900 bg-slate-950/90 py-1.5 px-4 text-center text-[10px] font-tech text-slate-500 flex flex-wrap items-center justify-between gap-2">
+        <span className="text-cyan-400 font-bold">ARMS CYBER-OPS // KSSR SEMAKAN TAHUN 6</span>
+        <span>Pembangun: <strong className="text-amber-400 font-cyber font-bold">{DEVELOPER_NAME}</strong></span>
+        <span className="text-emerald-400">🎮 16:9 Landscape Mode Enabled</span>
       </footer>
 
     </div>
