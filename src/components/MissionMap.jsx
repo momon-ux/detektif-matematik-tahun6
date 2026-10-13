@@ -68,37 +68,37 @@ export default function MissionMap({
 
           {/* Quick Action Badges Box */}
           <div className="flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0">
-            {/* Roda Sifir Button */}
+            {/* Roda Sifir & Boss Battle Button */}
             <button
               onClick={() => {
                 sound.playClick();
                 onOpenRodaSifir();
               }}
-              className="flex items-center gap-3 p-3.5 rounded-xl bg-cyan-950/60 hover:bg-cyan-900/60 border border-cyan-400/50 hover:border-cyan-300 transition-all text-left group glow-cyan"
+              className="flex items-center gap-3 p-3.5 rounded-xl bg-gradient-to-r from-rose-950/80 to-amber-950/80 hover:from-rose-900/80 hover:to-amber-900/80 border border-amber-500/60 hover:border-amber-400 transition-all text-left group shadow-lg"
             >
-              <div className="p-2.5 rounded-lg bg-cyan-500 text-slate-950 group-hover:scale-110 transition-transform">
+              <div className="p-2.5 rounded-lg bg-gradient-to-br from-amber-500 to-rose-500 text-slate-950 group-hover:scale-110 transition-transform">
                 <RotateCw className="w-5 h-5 animate-spin" />
               </div>
               <div>
-                <p className="text-xs text-cyan-300 font-medium">Latihan Congak Pantas</p>
-                <p className="text-sm font-bold text-white group-hover:text-cyan-200">Arena Roda Sifir</p>
+                <p className="text-[11px] text-amber-300 font-bold uppercase">Mode Bertarung Pantas</p>
+                <p className="text-sm font-extrabold text-white group-hover:text-amber-200">Arena Bos & Roda Sifir ⚔️</p>
               </div>
             </button>
 
-            {/* Score Records Button */}
+            {/* Calendar Score Records Button */}
             <button
               onClick={() => {
                 sound.playClick();
                 onOpenRecords();
               }}
-              className="flex items-center gap-3 p-3.5 rounded-xl bg-amber-950/50 hover:bg-amber-900/60 border border-amber-500/50 hover:border-amber-400 transition-all text-left group glow-amber"
+              className="flex items-center gap-3 p-3.5 rounded-xl bg-cyan-950/80 hover:bg-cyan-900/80 border border-cyan-500/60 hover:border-cyan-400 transition-all text-left group shadow-lg"
             >
-              <div className="p-2.5 rounded-lg bg-amber-500 text-slate-950 group-hover:scale-110 transition-transform">
+              <div className="p-2.5 rounded-lg bg-cyan-500 text-slate-950 group-hover:scale-110 transition-transform">
                 <Trophy className="w-5 h-5" />
               </div>
               <div>
-                <p className="text-xs text-amber-300 font-medium">Buku Rekod Murid</p>
-                <p className="text-sm font-bold text-white group-hover:text-amber-200">Papan Markah & Slip</p>
+                <p className="text-[11px] text-cyan-300 font-bold uppercase">Log Aktiviti Bilik Darjah</p>
+                <p className="text-sm font-extrabold text-white group-hover:text-cyan-200">Paparan Markah Kalendar 🗓️</p>
               </div>
             </button>
 

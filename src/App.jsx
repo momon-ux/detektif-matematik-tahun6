@@ -236,6 +236,13 @@ export default function App() {
             });
             sound.playClick();
           }}
+          onSwitchStudent={(name, className) => {
+            updateProfile({
+              ...profile,
+              agentName: name,
+              studentClass: className
+            });
+          }}
         />
       )}
 

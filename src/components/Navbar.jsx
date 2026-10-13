@@ -104,10 +104,11 @@ export default function Navbar({
                 sound.playClick();
                 onOpenRecords();
               }}
-              className="p-1.5 sm:p-2 rounded-lg bg-amber-950/60 hover:bg-amber-900/60 text-amber-300 border border-amber-600/40 transition-colors"
-              title="Buku Rekod & Papan Markah Murid"
+              className="flex items-center gap-1.5 px-2 sm:px-3 py-1.5 rounded-xl bg-amber-950/70 hover:bg-amber-900/80 text-amber-300 border border-amber-600/50 text-xs font-cyber font-bold transition-colors"
+              title="Paparan Markah Kalendar Murid"
             >
-              <Trophy className="w-4 h-4" />
+              <Trophy className="w-3.5 h-3.5" />
+              <span className="hidden md:inline">MARKAH</span>
             </button>
 
             {/* Guide Book */}

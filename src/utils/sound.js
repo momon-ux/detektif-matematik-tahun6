@@ -146,6 +146,73 @@ class SoundEngine {
       }, idx * 50);
     });
   }
+
+  playLaser() {
+    if (this.muted) return;
+    this.init();
+    if (!this.ctx) return;
+    try {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(1600, this.ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(150, this.ctx.currentTime + 0.15);
+      gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.15);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start();
+      osc.stop(this.ctx.currentTime + 0.15);
+    } catch {}
+  }
+
+  playBossHit() {
+    if (this.muted) return;
+    this.init();
+    if (!this.ctx) return;
+    this.playTone(120, 'square', 0.18, 0.25);
+    setTimeout(() => this.playTone(90, 'sawtooth', 0.15, 0.2), 50);
+  }
+
+  playBossAttack() {
+    if (this.muted) return;
+    this.init();
+    if (!this.ctx) return;
+    this.playTone(180, 'sawtooth', 0.25, 0.25);
+    setTimeout(() => this.playTone(130, 'square', 0.2, 0.25), 80);
+  }
+
+  playCriticalHit() {
+    if (this.muted) return;
+    this.init();
+    if (!this.ctx) return;
+    const freqs = [523.25, 783.99, 1046.5, 1567.98];
+    freqs.forEach((f, i) => {
+      setTimeout(() => this.playTone(f, 'triangle', 0.12, 0.2), i * 40);
+    });
+  }
+
+  playBossDefeat() {
+    if (this.muted) return;
+    this.init();
+    if (!this.ctx) return;
+    // Major triumphant cyber fanfare
+    const fanfare = [392, 523.25, 659.25, 783.99, 1046.5, 1318.51, 1567.98];
+    fanfare.forEach((f, i) => {
+      setTimeout(() => this.playTone(f, 'sine', 0.35, 0.22), i * 80);
+    });
+  }
+
+  playPowerUp() {
+    if (this.muted) return;
+    this.init();
+    if (!this.ctx) return;
+    const chime = [880, 1108.73, 1318.51, 1760];
+    chime.forEach((f, i) => {
+      setTimeout(() => this.playTone(f, 'sine', 0.12, 0.15), i * 45);
+    });
+  }
 }
 
 export const sound = new SoundEngine();
+

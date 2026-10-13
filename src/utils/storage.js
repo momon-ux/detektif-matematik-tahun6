@@ -58,18 +58,47 @@ export function saveProfile(data) {
   }
 }
 
+export const MASTER_RECORDS_KEY = 'arms_master_score_records';
+
+export function getAllMasterRecords() {
+  try {
+    const raw = localStorage.getItem(MASTER_RECORDS_KEY);
+    if (!raw) return [];
+    const list = JSON.parse(raw);
+    return Array.isArray(list) ? list : [];
+  } catch {
+    return [];
+  }
+}
+
+export function saveAllMasterRecords(records) {
+  try {
+    localStorage.setItem(MASTER_RECORDS_KEY, JSON.stringify(records));
+  } catch (e) {
+    console.error('Failed to save master records', e);
+  }
+}
+
 export function recordScoreEntry(profile, entry) {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  const isoDate = `${year}-${month}-${day}`;
+
   const newRecord = {
     id: `rec-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
     studentName: profile.agentName || 'Ejen Pelajar',
     studentClass: profile.studentClass || '6 Inovatif',
     schoolName: profile.schoolName || 'SK Bestari Perdana',
-    date: new Date().toLocaleDateString('ms-MY', {
+    avatarId: profile.avatarId || 'agent-kilat',
+    isoDate: isoDate,
+    date: now.toLocaleDateString('ms-MY', {
       day: '2-digit',
       month: '2-digit',
       year: 'numeric'
     }),
-    time: new Date().toLocaleTimeString('ms-MY', {
+    time: now.toLocaleTimeString('ms-MY', {
       hour: '2-digit',
       minute: '2-digit'
     }),
@@ -77,11 +106,26 @@ export function recordScoreEntry(profile, entry) {
     ...entry
   };
 
-  const updatedRecords = [newRecord, ...(profile.scoreRecords || [])].slice(0, 50); // Simpan 50 rekod terkini
+  // 1. Profile local records (up to 50)
+  const updatedRecords = [newRecord, ...(profile.scoreRecords || [])].slice(0, 50);
+
+  // 2. Master class-wide calendar log (up to 300)
+  const masterList = getAllMasterRecords();
+  const updatedMaster = [newRecord, ...masterList.filter(r => r.id !== newRecord.id)].slice(0, 300);
+  saveAllMasterRecords(updatedMaster);
+
   return {
     ...profile,
     scoreRecords: updatedRecords
   };
+}
+
+export function clearMasterRecords() {
+  try {
+    localStorage.removeItem(MASTER_RECORDS_KEY);
+  } catch (e) {
+    console.error('Failed to clear master records', e);
+  }
 }
 
 export function getRank(xp) {
