@@ -592,7 +592,7 @@ export default function AdminSettingsModal({ onClose, onConfigUpdated }) {
                       SET SEMULA KE SENARAI ASAL GURU
                     </h5>
                     <p className="text-xs text-slate-300 leading-relaxed">
-                      Menetapkan semula semua kelas kepada 5 kelas utama guru: <strong>5 Khoir, 5 Mumtaz, 6 Khoir, 6 Jahid, 6 Mumtaz</strong> dengan senarai nama murid asal.
+                      Menetapkan semula semua kelas kepada 8 kelas utama SK Ranggu: <strong>Tahun 5 & Tahun 6 (Khoir, Mumtaz, Jahid, Eltizam)</strong> dengan senarai 282 orang murid asal.
                     </p>
                     {!confirmReset ? (
                       <button

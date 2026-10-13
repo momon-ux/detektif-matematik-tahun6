@@ -210,7 +210,7 @@ export default function ProfileModal({ profile, onSaveProfile, onClose }) {
               <span className="text-[10px] text-slate-400 font-tech uppercase tracking-wider block">
                 PILIH KELAS ({selectedYear}):
               </span>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {classesInYear.map(cls => (
                   <button
                     type="button"
