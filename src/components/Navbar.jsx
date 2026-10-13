@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, Star, Zap, Volume2, VolumeX, BookOpen, Award, User, RotateCcw, RotateCw, Trophy } from 'lucide-react';
+import { Shield, Star, Zap, Volume2, VolumeX, BookOpen, Award, User, RotateCcw, RotateCw, Trophy, Smartphone } from 'lucide-react';
 import { getRank } from '../utils/storage';
 import { sound } from '../utils/sound';
 
@@ -10,6 +10,7 @@ export default function Navbar({
   onOpenCertificate,
   onOpenRodaSifir,
   onOpenRecords,
+  onOpenInstall,
   onResetProgress,
   onHomeClick
 }) {
@@ -109,6 +110,19 @@ export default function Navbar({
             >
               <Trophy className="w-3.5 h-3.5" />
               <span className="hidden md:inline">MARKAH</span>
+            </button>
+
+            {/* Install PWA Button */}
+            <button
+              onClick={() => {
+                sound.playClick();
+                onOpenInstall();
+              }}
+              className="flex items-center gap-1.5 px-2 sm:px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-cyber font-extrabold text-xs shadow-md transition-all hover:scale-105"
+              title="Pasang Aplikasi ke Telefon (Add to Home Screen)"
+            >
+              <Smartphone className="w-3.5 h-3.5 text-slate-950" />
+              <span className="hidden sm:inline">PASANG APP</span>
             </button>
 
             {/* Guide Book */}

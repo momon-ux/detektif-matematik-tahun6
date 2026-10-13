@@ -1,6 +1,6 @@
 import React from 'react';
 import { CASES_DATA } from '../data/casesData';
-import { Lock, Play, CheckCircle2, Star, ShieldAlert, Zap, Compass, ChevronRight, RotateCw, Trophy } from 'lucide-react';
+import { Lock, Play, CheckCircle2, Star, ShieldAlert, Zap, Compass, ChevronRight, RotateCw, Trophy, Smartphone } from 'lucide-react';
 import { sound } from '../utils/sound';
 import { getRank, getNextRank, DEVELOPER_NAME } from '../utils/storage';
 
@@ -10,7 +10,8 @@ export default function MissionMap({
   onOpenGuide,
   onOpenCertificate,
   onOpenRodaSifir,
-  onOpenRecords
+  onOpenRecords,
+  onOpenInstall
 }) {
   const completedCases = profile.completedCases || [];
   const caseScores = profile.caseScores || {};
@@ -137,6 +138,37 @@ export default function MissionMap({
             )}
           </div>
         </div>
+      </div>
+
+      {/* PWA Parents Callout Banner */}
+      <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-cyan-950/80 via-slate-900 to-emerald-950/80 border border-cyan-500/40 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xl">
+        <div className="flex items-center gap-4">
+          <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-2xl overflow-hidden border-2 border-cyan-400 shadow-lg shadow-cyan-500/30 shrink-0">
+            <img src="./pwa-icon-512.png" alt="Logo Detektif Siber" className="w-full h-full object-cover" />
+          </div>
+          <div>
+            <span className="text-[10px] font-tech text-emerald-400 font-bold uppercase tracking-wider">
+              📲 PANDUAN KHAS IBU BAPA & GURU
+            </span>
+            <h3 className="font-cyber font-bold text-base sm:text-lg text-white">
+              Pasang Aplikasi Ini Terus Ke Telefon (Add to Home Screen)
+            </h3>
+            <p className="text-xs text-slate-300 font-tech">
+              Mudah untuk anak-anak main bila-bila masa seperti aplikasi telefon biasa tanpa iklan!
+            </p>
+          </div>
+        </div>
+
+        <button
+          onClick={() => {
+            sound.playClick();
+            onOpenInstall();
+          }}
+          className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-400 hover:from-cyan-400 hover:to-emerald-300 text-slate-950 font-cyber font-extrabold text-xs flex items-center justify-center gap-2 shadow-lg shadow-cyan-950 hover:scale-105 active:scale-95 transition-all shrink-0"
+        >
+          <Smartphone className="w-4 h-4" />
+          <span>CARA PASANG KE TELEFON</span>
+        </button>
       </div>
 
       {/* Grid of 8 Cases */}

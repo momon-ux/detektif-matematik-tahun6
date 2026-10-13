@@ -10,6 +10,7 @@ import ProfileModal from './components/ProfileModal';
 import CertificateModal from './components/CertificateModal';
 import RodaSifir from './components/RodaSifir';
 import ScoreRecordsModal from './components/ScoreRecordsModal';
+import InstallPwaModal from './components/InstallPwaModal';
 import { loadProfile, saveProfile, resetAllProgress, recordScoreEntry, DEVELOPER_NAME, DEVELOPER_TITLE, DEFAULT_PROFILE } from './utils/storage';
 import { sound } from './utils/sound';
 
@@ -25,6 +26,28 @@ export default function App() {
   const [showCertificateModal, setShowCertificateModal] = useState(false);
   const [showScoreRecordsModal, setShowScoreRecordsModal] = useState(false);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
+  const [showInstallModal, setShowInstallModal] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+
+  // PWA install prompt listener
+  useEffect(() => {
+    const handleBeforeInstall = (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+    window.addEventListener('beforeinstallprompt', handleBeforeInstall);
+    return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstall);
+  }, []);
+
+  const handleTriggerInstall = async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      setDeferredPrompt(null);
+      setShowInstallModal(false);
+    }
+  };
 
   // Persist profile changes
   const updateProfile = (newProfile) => {
@@ -136,6 +159,7 @@ export default function App() {
         onOpenCertificate={() => setShowCertificateModal(true)}
         onOpenRodaSifir={() => setCurrentView('roda-sifir')}
         onOpenRecords={() => setShowScoreRecordsModal(true)}
+        onOpenInstall={() => setShowInstallModal(true)}
         onResetProgress={() => setShowResetConfirm(true)}
         onHomeClick={handleReturnToMap}
       />
@@ -150,6 +174,7 @@ export default function App() {
             onOpenCertificate={() => setShowCertificateModal(true)}
             onOpenRodaSifir={() => setCurrentView('roda-sifir')}
             onOpenRecords={() => setShowScoreRecordsModal(true)}
+            onOpenInstall={() => setShowInstallModal(true)}
           />
         )}
 
@@ -243,6 +268,15 @@ export default function App() {
               studentClass: className
             });
           }}
+        />
+      )}
+
+      {/* PWA Install Guide Modal for Parents & Students */}
+      {showInstallModal && (
+        <InstallPwaModal
+          onClose={() => setShowInstallModal(false)}
+          deferredPrompt={deferredPrompt}
+          onTriggerInstall={handleTriggerInstall}
         />
       )}
 
