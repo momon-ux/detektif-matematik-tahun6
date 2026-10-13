@@ -1,5 +1,8 @@
 import React from 'react';
-import { Shield, Star, Zap, Volume2, VolumeX, BookOpen, Award, User, RotateCcw, RotateCw, Trophy, Smartphone } from 'lucide-react';
+import { 
+  Shield, Star, Zap, Volume2, VolumeX, BookOpen, 
+  Award, User, RotateCcw, RotateCw, Trophy, Smartphone, Settings 
+} from 'lucide-react';
 import { getRank } from '../utils/storage';
 import { sound } from '../utils/sound';
 
@@ -11,6 +14,7 @@ export default function Navbar({
   onOpenRodaSifir,
   onOpenRecords,
   onOpenInstall,
+  onOpenAdminSettings,
   onResetProgress,
   onHomeClick
 }) {
@@ -156,6 +160,18 @@ export default function Navbar({
               title={muted ? 'Buka Bunyi' : 'Senyapkan Bunyi'}
             >
               {muted ? <VolumeX className="w-4 h-4 text-rose-400" /> : <Volume2 className="w-4 h-4 text-emerald-400" />}
+            </button>
+
+            {/* Admin Settings (Teacher Control Panel) */}
+            <button
+              onClick={() => {
+                sound.playClick();
+                onOpenAdminSettings();
+              }}
+              className="p-2 rounded-lg bg-slate-900 hover:bg-cyan-950/80 text-slate-300 hover:text-cyan-300 border border-slate-800 hover:border-cyan-700/60 transition-colors"
+              title="Tetapan Guru & Admin (Urus Kelas & Murid)"
+            >
+              <Settings className="w-4 h-4 text-cyan-400" />
             </button>
 
             {/* Reset Progress */}

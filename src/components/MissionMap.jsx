@@ -42,7 +42,7 @@ export default function MissionMap({
                 {profile.agentName}
               </h2>
               <span className="text-[10px] font-tech font-bold px-2 py-0.5 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300">
-                {profile.studentClass}
+                {profile.selectedGrade ? `${profile.selectedGrade} • ` : ''}{profile.studentClass}
               </span>
             </div>
             <p className={`text-[11px] font-cyber font-semibold ${currentRank.color}`}>

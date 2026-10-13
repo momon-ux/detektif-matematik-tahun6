@@ -6,7 +6,8 @@ import {
 } from 'lucide-react';
 import { 
   getRank, DEVELOPER_NAME, DEVELOPER_TITLE, 
-  getAllMasterRecords, saveAllMasterRecords, clearMasterRecords 
+  getAllMasterRecords, saveAllMasterRecords, clearMasterRecords,
+  getClassesConfig
 } from '../utils/storage';
 import { sound } from '../utils/sound';
 
@@ -42,6 +43,8 @@ export default function ScoreRecordsModal({
   // Unique classes for filter
   const classList = useMemo(() => {
     const set = new Set();
+    const configClasses = getClassesConfig();
+    configClasses.forEach(c => set.add(c.name));
     allRecords.forEach(r => {
       if (r.studentClass) set.add(r.studentClass);
     });
@@ -189,7 +192,7 @@ export default function ScoreRecordsModal({
                 <span>EJEN SEMASA: {profile.agentName.toUpperCase()}</span>
               </h2>
               <div className="flex flex-wrap items-center gap-3 text-xs font-tech text-slate-300">
-                <span className="text-amber-300 font-bold">KELAS: {profile.studentClass}</span>
+                <span className="text-amber-300 font-bold">KELAS: {profile.selectedGrade ? `${profile.selectedGrade} — ` : ''}{profile.studentClass}</span>
                 <span>•</span>
                 <span className="text-slate-400">{profile.schoolName}</span>
                 <span>•</span>

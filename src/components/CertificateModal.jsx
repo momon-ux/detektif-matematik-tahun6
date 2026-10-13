@@ -87,7 +87,7 @@ export default function CertificateModal({ profile, onClose }) {
               </h3>
 
               <div className="flex flex-wrap items-center justify-center gap-2 text-xs font-tech text-slate-300">
-                <span className="text-amber-300 font-bold">KELAS: {profile.studentClass}</span>
+                <span className="text-amber-300 font-bold">KELAS: {profile.selectedGrade ? `${profile.selectedGrade} — ` : ''}{profile.studentClass}</span>
                 <span>|</span>
                 <span className="text-cyan-300 font-semibold">{profile.schoolName}</span>
                 <span>|</span>

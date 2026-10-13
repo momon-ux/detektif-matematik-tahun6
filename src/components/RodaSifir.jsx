@@ -527,7 +527,7 @@ export default function RodaSifir({ profile, onUpdateProfile, onBack }) {
           <div className="text-xs font-tech text-slate-300 flex items-center gap-1.5 bg-slate-900/80 px-2.5 py-1 rounded-lg border border-slate-800">
             <span>EJEN: <strong className="text-cyan-400">{profile.agentName}</strong></span>
             <span>|</span>
-            <span>KELAS: <strong className="text-amber-300 font-bold">{profile.studentClass}</strong></span>
+            <span>KELAS: <strong className="text-amber-300 font-bold">{profile.selectedGrade ? `${profile.selectedGrade} - ` : ''}{profile.studentClass}</strong></span>
           </div>
         </div>
 

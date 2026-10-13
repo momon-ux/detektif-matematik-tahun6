@@ -11,6 +11,7 @@ import CertificateModal from './components/CertificateModal';
 import RodaSifir from './components/RodaSifir';
 import ScoreRecordsModal from './components/ScoreRecordsModal';
 import InstallPwaModal from './components/InstallPwaModal';
+import AdminSettingsModal from './components/AdminSettingsModal';
 import { loadProfile, saveProfile, resetAllProgress, recordScoreEntry, DEVELOPER_NAME, DEVELOPER_TITLE, DEFAULT_PROFILE } from './utils/storage';
 import { sound } from './utils/sound';
 
@@ -25,6 +26,7 @@ export default function App() {
   const [showGuideModal, setShowGuideModal] = useState(false);
   const [showCertificateModal, setShowCertificateModal] = useState(false);
   const [showScoreRecordsModal, setShowScoreRecordsModal] = useState(false);
+  const [showAdminSettingsModal, setShowAdminSettingsModal] = useState(false);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [showInstallModal, setShowInstallModal] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState(null);
@@ -160,6 +162,7 @@ export default function App() {
         onOpenRodaSifir={() => setCurrentView('roda-sifir')}
         onOpenRecords={() => setShowScoreRecordsModal(true)}
         onOpenInstall={() => setShowInstallModal(true)}
+        onOpenAdminSettings={() => setShowAdminSettingsModal(true)}
         onResetProgress={() => setShowResetConfirm(true)}
         onHomeClick={handleReturnToMap}
       />
@@ -277,6 +280,24 @@ export default function App() {
           onClose={() => setShowInstallModal(false)}
           deferredPrompt={deferredPrompt}
           onTriggerInstall={handleTriggerInstall}
+        />
+      )}
+
+      {/* Admin / Teacher Settings Modal */}
+      {showAdminSettingsModal && (
+        <AdminSettingsModal
+          onClose={() => setShowAdminSettingsModal(false)}
+          onConfigUpdated={(newConfig) => {
+            // Keep active profile synced if class was deleted
+            const activeClasses = newConfig.map(c => c.name);
+            if (!activeClasses.includes(profile.studentClass) && newConfig.length > 0) {
+              updateProfile({
+                ...profile,
+                studentClass: newConfig[0].name,
+                agentName: newConfig[0].students[0] || profile.agentName
+              });
+            }
+          }}
         />
       )}
 
