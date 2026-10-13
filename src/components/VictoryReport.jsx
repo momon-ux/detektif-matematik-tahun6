@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { Award, Star, Zap, CheckCircle2, ArrowRight, RotateCcw, Share2, ShieldCheck } from 'lucide-react';
+import { Award, Star, Zap, CheckCircle2, ArrowRight, RotateCcw, Share2, ShieldCheck, Trophy } from 'lucide-react';
 import { sound } from '../utils/sound';
-import { getRank } from '../utils/storage';
+import { getRank, DEVELOPER_NAME, DEVELOPER_TITLE } from '../utils/storage';
 
 export default function VictoryReport({
   caseData,
@@ -9,6 +9,7 @@ export default function VictoryReport({
   onReturnToMap,
   onReplayCase,
   onOpenCertificate,
+  onOpenRecords,
   profile
 }) {
   // Calculate Stars
@@ -45,8 +46,11 @@ export default function VictoryReport({
           <h2 className="text-2xl sm:text-4xl font-extrabold font-cyber text-white pt-2">
             TAHNIAH, {profile.agentName.toUpperCase()}!
           </h2>
-          <p className="text-xs sm:text-sm text-slate-300">
-            Peti keselamatan siber berjaya dibuka dan bukti telah dihantar ke Pangkalan Data ARMS.
+          <p className="text-xs font-tech text-amber-300">
+            KELAS: <strong className="text-white">{profile.studentClass}</strong> | KOD: <strong className="text-cyan-300">{profile.agentCodename}</strong>
+          </p>
+          <p className="text-xs sm:text-sm text-slate-300 pt-1">
+            Peti keselamatan siber berjaya dibuka dan rekod kemenangan anda telah dicatat dalam Buku Rekod Pentaksiran!
           </p>
         </div>
 
@@ -120,7 +124,7 @@ export default function VictoryReport({
             <ArrowRight className="w-4 h-4" />
           </button>
 
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-2.5">
             <button
               onClick={() => {
                 sound.playClick();
@@ -135,14 +139,30 @@ export default function VictoryReport({
             <button
               onClick={() => {
                 sound.playClick();
-                onOpenCertificate();
+                onOpenRecords();
               }}
               className="flex-1 py-2.5 rounded-xl bg-amber-950/40 hover:bg-amber-900/60 border border-amber-600/50 text-amber-300 font-tech text-xs flex items-center justify-center gap-1.5 transition-colors"
             >
+              <Trophy className="w-3.5 h-3.5" />
+              <span>Buku Rekod Markah</span>
+            </button>
+
+            <button
+              onClick={() => {
+                sound.playClick();
+                onOpenCertificate();
+              }}
+              className="flex-1 py-2.5 rounded-xl bg-cyan-950/40 hover:bg-cyan-900/60 border border-cyan-600/50 text-cyan-300 font-tech text-xs flex items-center justify-center gap-1.5 transition-colors"
+            >
               <Award className="w-3.5 h-3.5" />
-              <span>Lihat Sijil Detektif</span>
+              <span>Lihat Sijil</span>
             </button>
           </div>
+        </div>
+
+        {/* Developer Attribution in Victory Report */}
+        <div className="pt-2 border-t border-slate-800/80 text-[11px] font-tech text-slate-500">
+          Pembangun Sistem: <strong className="text-cyan-400">{DEVELOPER_NAME}</strong>
         </div>
 
       </div>

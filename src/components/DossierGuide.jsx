@@ -331,9 +331,9 @@ export default function DossierGuide({ onClose }) {
         </div>
 
         {/* Modal Bottom Footer */}
-        <div className="p-4 bg-slate-950 border-t border-slate-800 flex items-center justify-between">
-          <p className="text-[11px] font-tech text-slate-500">
-            ARMS RESEARCH DATABASE // DIKEMASKINI DENGAN DSKP KSSR SEMAKAN TERKINI
+        <div className="p-4 bg-slate-950 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+          <p className="text-[11px] font-tech text-slate-400">
+            DSKP KSSR SEMAKAN TERKINI • PEMBANGUN SISTEM: <strong className="text-cyan-400">MOHAMMAD FIKREY BIN ABDUL GAPAR</strong>
           </p>
           <button
             onClick={() => {

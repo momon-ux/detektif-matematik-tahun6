@@ -9,7 +9,8 @@ import DossierGuide from './components/DossierGuide';
 import ProfileModal from './components/ProfileModal';
 import CertificateModal from './components/CertificateModal';
 import RodaSifir from './components/RodaSifir';
-import { loadProfile, saveProfile, resetAllProgress, DEFAULT_PROFILE } from './utils/storage';
+import ScoreRecordsModal from './components/ScoreRecordsModal';
+import { loadProfile, saveProfile, resetAllProgress, recordScoreEntry, DEVELOPER_NAME, DEVELOPER_TITLE, DEFAULT_PROFILE } from './utils/storage';
 import { sound } from './utils/sound';
 
 export default function App() {
@@ -22,6 +23,7 @@ export default function App() {
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [showGuideModal, setShowGuideModal] = useState(false);
   const [showCertificateModal, setShowCertificateModal] = useState(false);
+  const [showScoreRecordsModal, setShowScoreRecordsModal] = useState(false);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
 
   // Persist profile changes
@@ -90,7 +92,17 @@ export default function App() {
       }
     };
 
-    updateProfile(updatedProfile);
+    // Record entry into student's permanent score book
+    const profileWithRecord = recordScoreEntry(updatedProfile, {
+      category: `Fail Siasatan: Topik ${activeCase.caseNumber}`,
+      title: activeCase.title,
+      stars: earnedStars,
+      score: xpEarned,
+      accuracy: `${earnedStars} / 3 Bintang`,
+      xp: xpEarned
+    });
+
+    updateProfile(profileWithRecord);
     setCurrentView('victory');
   };
 
@@ -123,6 +135,7 @@ export default function App() {
         onOpenGuide={() => setShowGuideModal(true)}
         onOpenCertificate={() => setShowCertificateModal(true)}
         onOpenRodaSifir={() => setCurrentView('roda-sifir')}
+        onOpenRecords={() => setShowScoreRecordsModal(true)}
         onResetProgress={() => setShowResetConfirm(true)}
         onHomeClick={handleReturnToMap}
       />
@@ -136,6 +149,7 @@ export default function App() {
             onOpenGuide={() => setShowGuideModal(true)}
             onOpenCertificate={() => setShowCertificateModal(true)}
             onOpenRodaSifir={() => setCurrentView('roda-sifir')}
+            onOpenRecords={() => setShowScoreRecordsModal(true)}
           />
         )}
 
@@ -179,6 +193,7 @@ export default function App() {
             onReturnToMap={handleReturnToMap}
             onReplayCase={handleReplayCase}
             onOpenCertificate={() => setShowCertificateModal(true)}
+            onOpenRecords={() => setShowScoreRecordsModal(true)}
           />
         )}
       </main>
@@ -202,6 +217,25 @@ export default function App() {
         <CertificateModal
           profile={profile}
           onClose={() => setShowCertificateModal(false)}
+        />
+      )}
+
+      {/* Student Score & Win Records Modal */}
+      {showScoreRecordsModal && (
+        <ScoreRecordsModal
+          profile={profile}
+          onClose={() => setShowScoreRecordsModal(false)}
+          onOpenProfile={() => {
+            setShowScoreRecordsModal(false);
+            setShowProfileModal(true);
+          }}
+          onClearRecords={() => {
+            updateProfile({
+              ...profile,
+              scoreRecords: []
+            });
+            sound.playClick();
+          }}
         />
       )}
 
@@ -233,10 +267,23 @@ export default function App() {
         </div>
       )}
 
-      {/* Footer */}
-      <footer className="no-print border-t border-slate-900 bg-slate-950/80 py-6 px-4 text-center text-xs font-tech text-slate-500 space-y-1">
-        <p>DETEKTIF SIBER MATEMATIK TAHUN 6 // DSKP KSSR SEMAKAN TERKINI</p>
-        <p className="text-slate-600">Direka khas untuk pembelajaran interaktif bilik darjah & kendiri di rumah</p>
+      {/* Footer With Developer Attribution & Cross-Device Info */}
+      <footer className="no-print border-t border-slate-900 bg-slate-950/90 py-6 px-4 text-center text-xs font-tech text-slate-400 space-y-2">
+        <div className="flex flex-wrap items-center justify-center gap-2 text-cyan-400 font-semibold">
+          <span>AGENSI RISIKAN MATEMATIK SIBER (ARMS) TAHUN 6</span>
+          <span>•</span>
+          <span>KSSR SEMAKAN TERKINI</span>
+        </div>
+        <p className="text-slate-300 text-xs sm:text-sm">
+          Pembangun Sistem: <strong className="text-amber-400 font-cyber font-bold tracking-wide">{DEVELOPER_NAME}</strong>
+        </p>
+        <p className="text-slate-400 text-[11px]">
+          {DEVELOPER_TITLE} • Dihasilkan untuk kegunaan pengajaran, latihan bilik darjah & kendiri
+        </p>
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-[11px] text-emerald-400">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+          <span>Sokongan Pelbagai Peranti: Telefon Pintar, Tablet, iPad, Komputer & Smartboard</span>
+        </div>
       </footer>
 
     </div>

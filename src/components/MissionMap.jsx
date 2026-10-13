@@ -1,15 +1,16 @@
 import React from 'react';
 import { CASES_DATA } from '../data/casesData';
-import { Lock, Play, CheckCircle2, Star, ShieldAlert, Zap, Compass, ChevronRight, RotateCw } from 'lucide-react';
+import { Lock, Play, CheckCircle2, Star, ShieldAlert, Zap, Compass, ChevronRight, RotateCw, Trophy } from 'lucide-react';
 import { sound } from '../utils/sound';
-import { getRank, getNextRank } from '../utils/storage';
+import { getRank, getNextRank, DEVELOPER_NAME } from '../utils/storage';
 
 export default function MissionMap({
   profile,
   onSelectCase,
   onOpenGuide,
   onOpenCertificate,
-  onOpenRodaSifir
+  onOpenRodaSifir,
+  onOpenRecords
 }) {
   const completedCases = profile.completedCases || [];
   const caseScores = profile.caseScores || {};
@@ -40,9 +41,9 @@ export default function MissionMap({
             </h2>
             
             <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-              Selamat bertugas, <strong className="text-cyan-300">{profile.agentName}</strong> ({profile.agentCodename})! 
+              Selamat bertugas, <strong className="text-cyan-300">{profile.agentName}</strong> (Kelas: <strong className="text-amber-300 font-tech">{profile.studentClass}</strong> | Kod: {profile.agentCodename})! 
               Penggodam misteri <span className="text-rose-400 font-semibold">"The Glitch"</span> sedang mensabotaj sistem utama negara. 
-              Selesaikan kes-kes matematik ini untuk mengumpul kod keselamatan dan membuka pintu peti besi!
+              Selesaikan kes-kes matematik ini untuk membuka peti besi dan catat rekod markah kemenangan anda!
             </p>
 
             {/* Progression Bar */}
@@ -81,6 +82,23 @@ export default function MissionMap({
               <div>
                 <p className="text-xs text-cyan-300 font-medium">Latihan Congak Pantas</p>
                 <p className="text-sm font-bold text-white group-hover:text-cyan-200">Arena Roda Sifir</p>
+              </div>
+            </button>
+
+            {/* Score Records Button */}
+            <button
+              onClick={() => {
+                sound.playClick();
+                onOpenRecords();
+              }}
+              className="flex items-center gap-3 p-3.5 rounded-xl bg-amber-950/50 hover:bg-amber-900/60 border border-amber-500/50 hover:border-amber-400 transition-all text-left group glow-amber"
+            >
+              <div className="p-2.5 rounded-lg bg-amber-500 text-slate-950 group-hover:scale-110 transition-transform">
+                <Trophy className="w-5 h-5" />
+              </div>
+              <div>
+                <p className="text-xs text-amber-300 font-medium">Buku Rekod Murid</p>
+                <p className="text-sm font-bold text-white group-hover:text-amber-200">Papan Markah & Slip</p>
               </div>
             </button>
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { X, Printer, Award, Shield, Star, CheckCircle } from 'lucide-react';
-import { getRank, AVATARS } from '../utils/storage';
+import { getRank, AVATARS, DEVELOPER_NAME, DEVELOPER_TITLE } from '../utils/storage';
 import { sound } from '../utils/sound';
 
 export default function CertificateModal({ profile, onClose }) {
@@ -76,7 +76,7 @@ export default function CertificateModal({ profile, onClose }) {
 
             <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto"></div>
 
-            {/* Recipient Details */}
+            {/* Recipient Details: Name, Class, School */}
             <div className="space-y-3 py-2">
               <p className="text-xs text-slate-400 uppercase tracking-wider font-tech">
                 DENGAN INI DIPERAKUI BAHAWA
@@ -86,9 +86,13 @@ export default function CertificateModal({ profile, onClose }) {
                 {profile.agentName.toUpperCase()}
               </h3>
 
-              <p className="text-xs text-cyan-300 font-tech">
-                KOD EJEN: <strong className="text-white">{profile.agentCodename}</strong> | SEKOLAH: <strong className="text-white">{profile.schoolName}</strong>
-              </p>
+              <div className="flex flex-wrap items-center justify-center gap-2 text-xs font-tech text-slate-300">
+                <span className="text-amber-300 font-bold">KELAS: {profile.studentClass}</span>
+                <span>|</span>
+                <span className="text-cyan-300 font-semibold">{profile.schoolName}</span>
+                <span>|</span>
+                <span className="text-slate-400">KOD: {profile.agentCodename}</span>
+              </div>
             </div>
 
             {/* Achievement Citation */}
@@ -120,24 +124,32 @@ export default function CertificateModal({ profile, onClose }) {
               </div>
             </div>
 
-            {/* Signatures & Seal */}
-            <div className="pt-6 border-t border-slate-800 flex items-center justify-between text-left text-xs font-tech text-slate-400 px-4">
+            {/* Signatures & Seal with Developer Credit */}
+            <div className="pt-6 border-t border-slate-800 grid grid-cols-1 sm:grid-cols-3 gap-4 items-center text-xs font-tech text-slate-400 px-2 text-center sm:text-left">
+              
+              {/* Developer Attribution Column */}
               <div>
-                <p className="text-slate-300 font-bold">KOD PENGESAHAN SIBER:</p>
-                <p className="text-cyan-400 font-tech">#ARMS-MATH6-{profile.xp}-{totalStars}</p>
-                <p className="text-[10px] text-slate-500 mt-1">Tarikh: {currentDate}</p>
+                <p className="text-cyan-400 font-bold uppercase text-[10px]">PEMBANGUN SISTEM:</p>
+                <p className="text-white font-bold font-cyber text-xs sm:text-sm">{DEVELOPER_NAME}</p>
+                <p className="text-[10px] text-slate-400">{DEVELOPER_TITLE}</p>
+                <p className="text-[9px] text-slate-500 mt-0.5">Kod Siber: #ARMS-M6-{profile.xp}-{totalStars}</p>
               </div>
 
               {/* Gold Seal Graphic */}
-              <div className="w-16 h-16 rounded-full border-2 border-amber-400/80 bg-gradient-to-tr from-amber-600 to-yellow-300 flex items-center justify-center text-slate-950 shadow-lg shadow-amber-500/20 font-bold font-cyber text-[9px] text-center p-1 uppercase leading-tight">
-                CAP RASMI ARMS
+              <div className="flex justify-center">
+                <div className="w-16 h-16 rounded-full border-2 border-amber-400/80 bg-gradient-to-tr from-amber-600 to-yellow-300 flex items-center justify-center text-slate-950 shadow-lg shadow-amber-500/20 font-bold font-cyber text-[9px] text-center p-1 uppercase leading-tight">
+                  CAP RASMI ARMS
+                </div>
               </div>
 
-              <div className="text-right">
-                <p className="text-slate-300 font-bold">KETUA PESURUHJAYA ARMS</p>
-                <p className="text-cyan-400 font-tech">PROF. ENIGMA KHALID</p>
-                <p className="text-[10px] text-slate-500 mt-1">Pusat Keselamatan Siber Kebangsaan</p>
+              {/* School / Assessor Column */}
+              <div className="sm:text-right">
+                <p className="text-slate-300 font-bold uppercase text-[10px]">PENGESAHAN GURU / PENILAI:</p>
+                <p className="text-amber-300 font-bold font-cyber text-xs sm:text-sm">[Tandatangan Pentaksir]</p>
+                <p className="text-[10px] text-slate-400">{profile.schoolName}</p>
+                <p className="text-[9px] text-slate-500 mt-0.5">Tarikh: {currentDate}</p>
               </div>
+
             </div>
 
           </div>

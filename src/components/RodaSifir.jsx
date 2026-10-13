@@ -5,6 +5,7 @@ import {
   XCircle, Timer, Volume2, Sparkles, HelpCircle, Eye, EyeOff 
 } from 'lucide-react';
 import { sound } from '../utils/sound';
+import { recordScoreEntry, DEVELOPER_NAME, DEVELOPER_TITLE } from '../utils/storage';
 
 const SLICES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 const SLICE_COLORS = [
@@ -63,6 +64,21 @@ export default function RodaSifir({ profile, onUpdateProfile, onBack }) {
       setIsTimerRunning(false);
       sound.playLevelUp();
       confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+      if (onUpdateProfile && score > 0) {
+        const accuracy = totalAnswered > 0 ? `${Math.round((totalCorrect / totalAnswered) * 100)}%` : '100%';
+        const xpEarned = Math.round(score / 5);
+        const updated = recordScoreEntry(profile, {
+          category: 'Roda Sifir (Pecut 60s)',
+          title: `Roda Sifir: Pecut 60 Saat (Skor ${score})`,
+          score: score,
+          accuracy: accuracy,
+          xp: xpEarned
+        });
+        onUpdateProfile({
+          ...updated,
+          xp: updated.xp + xpEarned
+        });
+      }
     }
     return () => clearInterval(timerId);
   }, [gameMode, isTimerRunning, timeLeft]);
@@ -177,6 +193,20 @@ export default function RodaSifir({ profile, onUpdateProfile, onBack }) {
         if (Object.keys(nextClock).length === 12) {
           sound.playLevelUp();
           confetti({ particleCount: 200, spread: 100, origin: { y: 0.5 } });
+          if (onUpdateProfile) {
+            const updated = recordScoreEntry(profile, {
+              category: 'Roda Sifir (Roda Jam 360°)',
+              title: `Roda Jam Sifir ${selectedTable}: Lengkap 12/12`,
+              score: 1200,
+              accuracy: '100%',
+              xp: 200
+            });
+            onUpdateProfile({
+              ...updated,
+              xp: updated.xp + earnedXp + 200
+            });
+            return;
+          }
         }
       }
 
@@ -221,16 +251,26 @@ export default function RodaSifir({ profile, onUpdateProfile, onBack }) {
       
       {/* Top Header & Back Button */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <button
-          onClick={() => {
-            sound.playClick();
-            onBack();
-          }}
-          className="inline-flex items-center gap-2 text-xs font-tech text-slate-400 hover:text-cyan-400 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          KEMBALI KE PETA MISI
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => {
+              sound.playClick();
+              onBack();
+            }}
+            className="inline-flex items-center gap-2 text-xs font-tech text-slate-400 hover:text-cyan-400 transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            KEMBALI KE PETA MISI
+          </button>
+
+          <span className="text-slate-600 hidden sm:inline">•</span>
+
+          <div className="text-xs font-tech text-slate-300 flex items-center gap-1.5 bg-slate-900/80 px-2.5 py-1 rounded-lg border border-slate-800">
+            <span>EJEN: <strong className="text-cyan-400">{profile.agentName}</strong></span>
+            <span>|</span>
+            <span>KELAS: <strong className="text-amber-300 font-bold">{profile.studentClass}</strong></span>
+          </div>
+        </div>
 
         {/* Live Streaks & XP Indicator */}
         <div className="flex items-center gap-3">
@@ -652,6 +692,11 @@ export default function RodaSifir({ profile, onUpdateProfile, onBack }) {
           </div>
         </div>
       )}
+
+      {/* Developer Attribution in Roda Sifir */}
+      <div className="text-center pt-2 text-[11px] font-tech text-slate-500">
+        <p>Pembangun Sistem: <strong className="text-cyan-400">{DEVELOPER_NAME}</strong> ({DEVELOPER_TITLE})</p>
+      </div>
 
     </div>
   );

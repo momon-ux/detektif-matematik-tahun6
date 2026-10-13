@@ -17,15 +17,20 @@ export const AVATARS = [
   { id: 'agent-orion', name: 'Ejen Orion', emoji: '🚀', role: 'Pakar Navigasi Ruang' },
 ];
 
+export const DEVELOPER_NAME = 'MOHAMMAD FIKREY BIN ABDUL GAPAR';
+export const DEVELOPER_TITLE = 'Pembangun Sistem & Pereka Gamifikasi Matematik';
+
 export const DEFAULT_PROFILE = {
   agentName: 'Ejen Pelajar',
   agentCodename: 'ARMS-007',
-  avatarId: 'agent-kilat',
+  studentClass: '6 Inovatif',
   schoolName: 'SK Bestari Perdana',
+  avatarId: 'agent-kilat',
   xp: 0,
   completedCases: [],
   caseScores: {},
   badges: [],
+  scoreRecords: [], // Senarai rekod markah siasatan kes & roda sifir
   soundMuted: false,
 };
 
@@ -33,7 +38,13 @@ export function loadProfile() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return { ...DEFAULT_PROFILE };
-    return { ...DEFAULT_PROFILE, ...JSON.parse(raw) };
+    const parsed = JSON.parse(raw);
+    return {
+      ...DEFAULT_PROFILE,
+      ...parsed,
+      studentClass: parsed.studentClass || '6 Inovatif',
+      scoreRecords: Array.isArray(parsed.scoreRecords) ? parsed.scoreRecords : []
+    };
   } catch {
     return { ...DEFAULT_PROFILE };
   }
@@ -45,6 +56,32 @@ export function saveProfile(data) {
   } catch (e) {
     console.error('Failed to save profile', e);
   }
+}
+
+export function recordScoreEntry(profile, entry) {
+  const newRecord = {
+    id: `rec-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+    studentName: profile.agentName || 'Ejen Pelajar',
+    studentClass: profile.studentClass || '6 Inovatif',
+    schoolName: profile.schoolName || 'SK Bestari Perdana',
+    date: new Date().toLocaleDateString('ms-MY', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    }),
+    time: new Date().toLocaleTimeString('ms-MY', {
+      hour: '2-digit',
+      minute: '2-digit'
+    }),
+    timestamp: Date.now(),
+    ...entry
+  };
+
+  const updatedRecords = [newRecord, ...(profile.scoreRecords || [])].slice(0, 50); // Simpan 50 rekod terkini
+  return {
+    ...profile,
+    scoreRecords: updatedRecords
+  };
 }
 
 export function getRank(xp) {
