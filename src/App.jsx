@@ -12,6 +12,7 @@ import RodaSifir from './components/RodaSifir';
 import ScoreRecordsModal from './components/ScoreRecordsModal';
 import InstallPwaModal from './components/InstallPwaModal';
 import AdminSettingsModal from './components/AdminSettingsModal';
+import MathShooter from './components/MathShooter';
 import { loadProfile, saveProfile, resetAllProgress, recordScoreEntry, DEVELOPER_NAME, DEVELOPER_TITLE, DEFAULT_PROFILE } from './utils/storage';
 import { sound } from './utils/sound';
 
@@ -160,6 +161,7 @@ export default function App() {
         onOpenGuide={() => setShowGuideModal(true)}
         onOpenCertificate={() => setShowCertificateModal(true)}
         onOpenRodaSifir={() => setCurrentView('roda-sifir')}
+        onOpenMathShooter={() => setCurrentView('math-shooter')}
         onOpenRecords={() => setShowScoreRecordsModal(true)}
         onOpenInstall={() => setShowInstallModal(true)}
         onOpenAdminSettings={() => setShowAdminSettingsModal(true)}
@@ -176,8 +178,17 @@ export default function App() {
             onOpenGuide={() => setShowGuideModal(true)}
             onOpenCertificate={() => setShowCertificateModal(true)}
             onOpenRodaSifir={() => setCurrentView('roda-sifir')}
+            onOpenMathShooter={() => setCurrentView('math-shooter')}
             onOpenRecords={() => setShowScoreRecordsModal(true)}
             onOpenInstall={() => setShowInstallModal(true)}
+          />
+        )}
+
+        {currentView === 'math-shooter' && (
+          <MathShooter
+            profile={profile}
+            onUpdateProfile={updateProfile}
+            onBack={handleReturnToMap}
           />
         )}
 

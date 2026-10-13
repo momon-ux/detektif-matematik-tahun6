@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { CASES_DATA } from '../data/casesData';
 import { 
   Lock, Play, CheckCircle2, Star, Zap, ChevronRight, 
-  RotateCw, Trophy, Swords, Smartphone, Award, Shield, Sparkles 
+  RotateCw, Trophy, Swords, Smartphone, Award, Shield, Sparkles, Target 
 } from 'lucide-react';
 import { sound } from '../utils/sound';
 import { getRank, DEVELOPER_NAME, DEVELOPER_TITLE } from '../utils/storage';
@@ -13,6 +13,7 @@ export default function MissionMap({
   onOpenGuide,
   onOpenCertificate,
   onOpenRodaSifir,
+  onOpenMathShooter,
   onOpenRecords,
   onOpenInstall
 }) {
@@ -95,39 +96,39 @@ export default function MissionMap({
       </div>
 
       {/* ======================================================== */}
-      {/* 2. THREE MAIN BATTLE MODES (Landscape Mobile Legends UI) */}
+      {/* 2. FOUR MAIN BATTLE MODES (Landscape Mobile Legends UI)  */}
       {/* ======================================================== */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
         
-        {/* Card 1: Cyber Boss Battle */}
+        {/* Card 1: Math Shooter (Meriam Matematik) */}
         <div 
           onClick={() => {
             sound.playClick();
-            onOpenRodaSifir();
+            onOpenMathShooter();
           }}
-          className="relative rounded-2xl bg-gradient-to-br from-rose-950/70 via-slate-900 to-amber-950/60 border border-rose-500/50 hover:border-rose-400 p-4 sm:p-5 cursor-pointer group shadow-xl hover:scale-[1.02] transition-all overflow-hidden flex flex-col justify-between min-h-[160px]"
+          className="relative rounded-2xl bg-gradient-to-br from-orange-950/80 via-slate-900 to-amber-950/70 border border-orange-500/60 hover:border-orange-400 p-4 sm:p-5 cursor-pointer group shadow-xl hover:scale-[1.02] transition-all overflow-hidden flex flex-col justify-between min-h-[160px]"
         >
-          <div className="absolute top-0 right-0 w-32 h-32 bg-rose-500/10 rounded-full blur-2xl pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 rounded-full blur-2xl pointer-events-none"></div>
           
           <div className="flex items-center justify-between">
-            <span className="text-[10px] font-cyber px-2.5 py-0.5 rounded-full bg-rose-950 border border-rose-500/40 text-rose-300 font-bold uppercase tracking-wider">
-              ⚔️ RAID PERTEMPURAN
+            <span className="text-[10px] font-cyber px-2.5 py-0.5 rounded-full bg-orange-950 border border-orange-500/40 text-orange-300 font-bold uppercase tracking-wider">
+              🎯 ARCADE SHOOTER
             </span>
-            <span className="text-2xl animate-pulse">👾</span>
+            <span className="text-2xl animate-bounce">🎈</span>
           </div>
 
           <div className="my-2">
-            <h3 className="text-lg sm:text-xl font-cyber font-extrabold text-white group-hover:text-rose-300 transition-colors">
-              PERANG BOS SIBER
+            <h3 className="text-base sm:text-lg font-cyber font-extrabold text-white group-hover:text-orange-300 transition-colors">
+              MATH SHOOTER
             </h3>
             <p className="text-xs text-slate-300 font-tech">
-              Tumpaskan 3 Bos Penggodam dengan tembakan laser sifir!
+              Tembak meriam & letupkan belon jawapan sifir!
             </p>
           </div>
 
-          <button className="w-full py-2 rounded-xl bg-gradient-to-r from-rose-600 to-amber-600 hover:from-rose-500 hover:to-amber-500 text-white font-cyber font-extrabold text-xs shadow-md flex items-center justify-center gap-1.5">
-            <Swords className="w-3.5 h-3.5" />
-            <span>MASUK BATTLEFIELD</span>
+          <button className="w-full py-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-400 hover:to-amber-500 text-white font-cyber font-extrabold text-xs shadow-md flex items-center justify-center gap-1.5">
+            <Target className="w-3.5 h-3.5" />
+            <span>MAIN SEKARANG</span>
           </button>
         </div>
 
@@ -149,11 +150,11 @@ export default function MissionMap({
           </div>
 
           <div className="my-2">
-            <h3 className="text-lg sm:text-xl font-cyber font-extrabold text-white group-hover:text-cyan-300 transition-colors">
+            <h3 className="text-base sm:text-lg font-cyber font-extrabold text-white group-hover:text-cyan-300 transition-colors">
               ARENA RODA SIFIR
             </h3>
             <p className="text-xs text-slate-300 font-tech">
-              Pecut masa 30s/60s, putaran bertuah & rentak sifir 1-12!
+              Pecut masa 30s/60s, putaran bertuah & rentak sifir!
             </p>
           </div>
 
@@ -163,7 +164,39 @@ export default function MissionMap({
           </button>
         </div>
 
-        {/* Card 3: Certificate / Guide Quick Access */}
+        {/* Card 3: Cyber Boss Battle */}
+        <div 
+          onClick={() => {
+            sound.playClick();
+            onOpenRodaSifir();
+          }}
+          className="relative rounded-2xl bg-gradient-to-br from-rose-950/70 via-slate-900 to-amber-950/60 border border-rose-500/50 hover:border-rose-400 p-4 sm:p-5 cursor-pointer group shadow-xl hover:scale-[1.02] transition-all overflow-hidden flex flex-col justify-between min-h-[160px]"
+        >
+          <div className="absolute top-0 right-0 w-32 h-32 bg-rose-500/10 rounded-full blur-2xl pointer-events-none"></div>
+          
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-cyber px-2.5 py-0.5 rounded-full bg-rose-950 border border-rose-500/40 text-rose-300 font-bold uppercase tracking-wider">
+              ⚔️ RAID PERTEMPURAN
+            </span>
+            <span className="text-2xl animate-pulse">👾</span>
+          </div>
+
+          <div className="my-2">
+            <h3 className="text-base sm:text-lg font-cyber font-extrabold text-white group-hover:text-rose-300 transition-colors">
+              PERANG BOS SIBER
+            </h3>
+            <p className="text-xs text-slate-300 font-tech">
+              Tumpaskan 3 Bos Penggodam dengan tembakan laser!
+            </p>
+          </div>
+
+          <button className="w-full py-2 rounded-xl bg-gradient-to-r from-rose-600 to-amber-600 hover:from-rose-500 hover:to-amber-500 text-white font-cyber font-extrabold text-xs shadow-md flex items-center justify-center gap-1.5">
+            <Swords className="w-3.5 h-3.5" />
+            <span>BATTLEFIELD</span>
+          </button>
+        </div>
+
+        {/* Card 4: Certificate / Guide Quick Access */}
         <div 
           onClick={() => {
             sound.playClick();
@@ -183,11 +216,11 @@ export default function MissionMap({
           </div>
 
           <div className="my-2">
-            <h3 className="text-lg sm:text-xl font-cyber font-extrabold text-white group-hover:text-amber-300 transition-colors">
-              {completedCases.length === CASES_DATA.length ? 'SIJIL DETEKTIF ARMS' : 'FORMULA & NOTA CEPAT'}
+            <h3 className="text-base sm:text-lg font-cyber font-extrabold text-white group-hover:text-amber-300 transition-colors">
+              {completedCases.length === CASES_DATA.length ? 'SIJIL ARMS' : 'BUKU FORMULA'}
             </h3>
             <p className="text-xs text-slate-300 font-tech">
-              {completedCases.length === CASES_DATA.length ? 'Semua sektor selesai! Cetak sijil anda.' : 'Rujukan ringkas topik & formula Tahun 6.'}
+              {completedCases.length === CASES_DATA.length ? 'Semua selesai! Cetak sijil.' : 'Rujukan nota pantas Tahun 6.'}
             </p>
           </div>
 

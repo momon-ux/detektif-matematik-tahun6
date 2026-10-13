@@ -1,7 +1,7 @@
 import React from 'react';
 import { 
   Shield, Star, Zap, Volume2, VolumeX, BookOpen, 
-  Award, User, RotateCcw, RotateCw, Trophy, Smartphone, Settings 
+  Award, User, RotateCcw, RotateCw, Trophy, Smartphone, Settings, Crosshair 
 } from 'lucide-react';
 import { getRank } from '../utils/storage';
 import { sound } from '../utils/sound';
@@ -12,6 +12,7 @@ export default function Navbar({
   onOpenGuide,
   onOpenCertificate,
   onOpenRodaSifir,
+  onOpenMathShooter,
   onOpenRecords,
   onOpenInstall,
   onOpenAdminSettings,
@@ -101,6 +102,19 @@ export default function Navbar({
             >
               <RotateCw className="w-3.5 h-3.5 animate-spin" />
               <span className="hidden sm:inline">RODA SIFIR</span>
+            </button>
+
+            {/* Math Shooter Button */}
+            <button
+              onClick={() => {
+                sound.playClick();
+                onOpenMathShooter();
+              }}
+              className="flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-xl bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white border border-amber-400/50 text-xs font-cyber font-bold shadow-md shadow-orange-950 transition-all hover:scale-105"
+              title="Permainan Math Shooter (Meriam Matematik)"
+            >
+              <Crosshair className="w-3.5 h-3.5 text-amber-200" />
+              <span className="hidden sm:inline">MATH SHOOTER</span>
             </button>
 
             {/* Score Records Button */}
