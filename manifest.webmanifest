@@ -1,0 +1,33 @@
+{
+  "name": "Detektif Siber Matematik Tahun 6 & Roda Sifir",
+  "short_name": "Detektif M6",
+  "description": "Gamifikasi Matematik Tahun 6 KSSR Semakan & Roda Sifir - Dibangunkan oleh Mohammad Fikrey Bin Abdul Gapar",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#06b6d4",
+  "orientation": "any",
+  "lang": "ms",
+  "categories": ["education", "games"],
+  "icons": [
+    {
+      "src": "./pwa-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./pwa-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./pwa-icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
